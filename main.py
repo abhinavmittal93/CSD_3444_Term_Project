@@ -6,9 +6,13 @@ app = Flask(__name__)
 
 @app.route("/")
 def test():
-    table_name = dbconnection.db["accounts"]
-    single_record = table_name.find_one()
+    collection_name = dbconnection.db["admins"]
+    single_record = collection_name.find_one()
     # return jsonify(message=single_record)
+    # mydict = {"name": "John Doe", "email": "johndoe@gmail.com", "password" : "john123"}
+
+    # x = collection_name.insert_one(mydict)
+    # print(x)
     return render_template("home.html", data = single_record)
 
 
