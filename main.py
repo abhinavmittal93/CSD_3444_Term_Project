@@ -46,6 +46,7 @@ def user():
     return render_template('form.html')
 
 
+
 if __name__ == '__main__':
     toastr.init_app(app)
     app.run()
