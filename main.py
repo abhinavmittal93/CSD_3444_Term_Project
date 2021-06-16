@@ -41,6 +41,11 @@ def add_new_user():
         return response
 
 
+@app.route('/user')  # decorator defines the
+def user():
+    return render_template('form.html')
+
+
 if __name__ == '__main__':
     toastr.init_app(app)
     app.run()
