@@ -41,11 +41,23 @@ def add_new_user():
         return response
 
 
-@app.route('/user')  # decorator defines the
+@app.route('/user')
 def user():
     return render_template('form.html')
 
 
+@app.route('/insert', methods=['POST'])
+def insert():
+    if request.method == 'POST':
+        fname = request.form.get("fname")
+        email = request.form.get("email")
+        cnum = request.form.get("cnum")
+        subject = request.form.get("subject")
+        message = request.form.get("message")
+        dict = {"name": fname, "email": email, "contact": cnum, "subject": subject, "message": message}
+        conn_contact = dbconnection.db["contact_messages"]
+        conn_contact.insert_one(dict)
+    return "SUCCESSFULY ENTERED!"
 
 if __name__ == '__main__':
     toastr.init_app(app)

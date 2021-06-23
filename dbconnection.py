@@ -5,3 +5,4 @@ MONGO_URI = "mongodb+srv://abhinav:abhinav123@csd3444.cl9ms.mongodb.net/college_
 
 mongodb_client = MongoClient(MONGO_URI)
 db = mongodb_client.college_admission_management
+conn_contact = db["contact_messages"]
