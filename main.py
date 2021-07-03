@@ -1,8 +1,20 @@
 from flask import Flask, request, render_template, jsonify
 import dbconnection
-
+import login
+from user import User
+from flask_toastr import Toastr
+from flask_session import Session
 
 app = Flask(__name__)
+toastr = Toastr(app)
+
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
+app.add_url_rule('/login', view_func=login.login_page)
+app.add_url_rule('/authenticate', view_func=login.authenticate_admin, methods=['POST'])
+
 
 @app.route("/")
 def test():
@@ -13,8 +25,18 @@ def test():
 
     # x = collection_name.insert_one(mydict)
     # print(x)
-    return render_template("home.html", data = single_record)
+    return render_template("home.html", data=single_record)
+
+@app.route("/add_new_user")
+def add_new_user():
+    user = User("Abhinav Mittal", "abhinavmittal93@gmail.com", "@Bhinav123")
+    response = user.create_new_user(user)
+    if(response):
+        return 'User created successfully'
+    else:
+        return response
 
 
 if __name__ == '__main__':
+    toastr.init_app(app)
     app.run()
