@@ -7,6 +7,8 @@ toastr = Toastr()
 
 
 def login_page():
+    if session.get("email"):
+        return redirect('/')
     return render_template("login.html")
 
 
@@ -38,8 +40,13 @@ def authenticate_admin():
     if (bcrypt.checkpw(password.encode("utf-8"), user['password'])):
         session["email"] = email
         flash(f"Logged In as {user['name']}", 'success')
-        #return render_template('home.html', user=user)
         return redirect('/')
 
-    flash("Invaild Credentials", 'error')
+    flash("Invalid Credentials", 'error')
+    return redirect('/login')
+
+
+def logout():
+    session["email"] = ''
+    flash("Logged out successfully.", 'success')
     return redirect('/login')

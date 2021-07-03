@@ -3,10 +3,14 @@
   <head>
     <meta charset="utf-8">
     <title>Courses</title>
+    {{ toastr.include_jquery() }}
+  {{ toastr.include_toastr_css() }}
+  {{ toastr.message() }}
   </head>
   <body>
     <h1> Logged In as: </h1>
   <p>{{user.name}}</p>
   <p>{{user.email}}</p>
+  {{ toastr.include_toastr_js() }}
   </body>
 </html>

@@ -14,6 +14,7 @@ Session(app)
 
 app.add_url_rule('/login', view_func=login.login_page)
 app.add_url_rule('/authenticate', view_func=login.authenticate_admin, methods=['POST'])
+app.add_url_rule('/logout', view_func=login.logout)
 
 
 @app.route("/")
