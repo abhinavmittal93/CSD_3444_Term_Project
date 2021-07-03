@@ -37,6 +37,10 @@ def authenticate_admin():
 
     user = collection_name.find_one(query)
 
+    if(not user):
+        flash("User not found.", 'error')
+        return redirect('/login')
+
     if (bcrypt.checkpw(password.encode("utf-8"), user['password'])):
         session["email"] = email
         flash(f"Logged In as {user['name']}", 'success')
