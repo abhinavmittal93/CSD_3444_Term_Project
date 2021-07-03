@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, session, redirect
 import dbconnection
 import login
 from user import User
@@ -18,14 +18,17 @@ app.add_url_rule('/authenticate', view_func=login.authenticate_admin, methods=['
 
 @app.route("/")
 def test():
+    if not session.get("email"):
+        return redirect('/login')
+
     collection_name = dbconnection.db["admins"]
-    single_record = collection_name.find_one()
+    user = collection_name.find_one()
     # return jsonify(message=single_record)
     # mydict = {"name": "John Doe", "email": "johndoe@gmail.com", "password" : "john123"}
 
     # x = collection_name.insert_one(mydict)
     # print(x)
-    return render_template("home.html", data=single_record)
+    return render_template("home.html", user=user)
 
 @app.route("/add_new_user")
 def add_new_user():

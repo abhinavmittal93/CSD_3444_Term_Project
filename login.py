@@ -11,8 +11,8 @@ def login_page():
 
 
 def authenticate_admin():
-    if session.get("name"):
-        return render_template('home.html')
+    if session.get("email"):
+        return redirect('/')
 
 
     req = request.form
@@ -36,9 +36,10 @@ def authenticate_admin():
     user = collection_name.find_one(query)
 
     if (bcrypt.checkpw(password.encode("utf-8"), user['password'])):
-        session["name"] = request.form.get("name")
+        session["email"] = email
         flash(f"Logged In as {user['name']}", 'success')
-        return render_template('home.html', user=user)
+        #return render_template('home.html', user=user)
+        return redirect('/')
 
     flash("Invaild Credentials", 'error')
-    return render_template("login.html")
+    return redirect('/login')
