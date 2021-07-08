@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lambton College</title>
+    <style>
+     form{
+    width: 50%;
+    padding: 10px;
+    margin: 20px 25%;
+    background: whitesmoke;
+}
+form:hover{
+    box-shadow: 5px 10px 20px rgb(133, 131, 131);
+}
+form label{
+    display: inline-block;
+    width: 200px;
+    padding: 20px 10px;
+}
+input[type="text"]{
+    height: 25px;
+    width: 300px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+input[type="email"]{
+    width: 300px;
+    height: 25px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+input[type="tel"]{
+    width: 150px;
+    height: 25px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+input[type="submit"]{
+    display: block;
+    margin: auto;
+    background: none;
+    padding: 10px;
+    border: 2px solid goldenrod;
+    transition: padding .3s;
+}
+input[type="submit"]:hover{
+    padding: 10px 20px;
+    background: goldenrod;
+    color:#004068;
+    box-shadow: 5px 5px 15px rgb(133, 131, 131);
+}
+
+.invalid{
+    border-color: red;
+}
+    </style>
+</head>
+<body>
+
+
+         <div id="para" class="parallax"></div>
+		 <h1 style= "text-align: center; color: #074972;">Lambton College  </h1>
+		 <h2 style= "text-align: center; color: #074972;text-decoration: underline"> Admission Form</h2>
+
+
+        <form action="{{ url_for('insert') }}" method="POST">
+            <label for="name">Student Name</label><input type="text" name="name" required> <br>
+            <label for="name">Father's Name</label><input type="text" name="fname"> <br>
+            <label for="name">Mother's Name</label><input type="text" name="mname"> <br>
+            <label for="email">Email</label><input type="email" name="email" required> <br>
+            <label for="Phone">Phone Number</label><input type="tel" name="phone" required> <br>
+            <label for="gender">Gender</label> <select name="gender" id="gender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select> <br>
+            <label for="degree">Highest degree</label> <select name="hdegree" id="hdegree" required>
+                <option value="10">Sen.Sec.</option>
+                <option value="2nd PUC">Bachelor Degree</option>
+                <option value="diploma">Diploma</option>
+            </select> <br>
+            <label for="apply-for">Apply For</label> <select name="applyfor" id="apply-for" required>
+                <option value="Graduation">Health Science</option>
+                <option value="Post-Graduation">Information Technology</option>
+                <option value="MBA">Business</option>
+            </select> <br>
+            <input type="submit" value="Submit" name="login">
+        </form>
+        <script>
+            input.onblur = function() {
+              if (!input.value.includes('@')) { // not email
+                input.classList.add('invalid');
+                // error.innerHTML = 'Please enter a correct email.'
+              }
+            };
+
+            input.onfocus = function() {
+              if (this.classList.contains('invalid')) {
+                // remove the "error" indication, because the user wants to re-enter something
+                this.classList.remove('invalid');
+                // error.innerHTML = "";
+              }
+            };
+        </script>
+		<a href="course page.html">College Course </a>
+
+
+         <p style="color:red; margin-top: 10px; text-align: center;"> &copy;Copyright 2018 All rights reserved.</p>
+
+</body>
+</html>

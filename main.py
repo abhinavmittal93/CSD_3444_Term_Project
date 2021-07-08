@@ -1,4 +1,3 @@
-from flask import Flask, render_template, session, redirect
 from flask_toastr import Toastr
 import admin_courses
 from flask import Flask, request, render_template, session, redirect, flash
@@ -31,6 +30,7 @@ app.add_url_rule('/admin/course/save', view_func=admin_courses.save_course, meth
 
 app.add_url_rule('/contactus', view_func=Contact_Us.get_contact_us_page)
 app.add_url_rule('/contactus/save', view_func=Contact_Us.save_contact_us_details, methods=['POST'])
+
 
 
 @app.route("/")
