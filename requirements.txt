@@ -2,3 +2,6 @@ Flask
 jinja2
 dnspython
 pymongo
+bcrypt
+Flask-Toastr
+Flask-Session
