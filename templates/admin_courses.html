@@ -1,0 +1,24 @@
+{% include 'header.html' %}
+<h1>Courses</h1>
+<hr>
+<div>
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Code</th>
+          <th scope="col">Name</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for keys in courses_list %}
+        <tr>
+          <td>{{keys.course_code}}</td>
+          <td>{{keys.course_name}}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+</div>
+{% include 'footer.html' %}
