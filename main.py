@@ -1,5 +1,7 @@
 from flask import Flask, request, render_template, session, redirect
 import dbconnection
+#import datetime
+
 import login
 from user import User
 from flask_toastr import Toastr
@@ -41,23 +43,24 @@ def add_new_user():
         return response
 
 
-@app.route('/user')
+@app.route('/contactus')
 def user():
-    return render_template('form.html')
+    return render_template('contact_us.html')
 
 
-@app.route('/insert', methods=['POST'])
-def insert():
+@app.route('/contactus/save', methods=['POST'])
+def contactus_save():
     if request.method == 'POST':
         fname = request.form.get("fname")
         email = request.form.get("email")
         cnum = request.form.get("cnum")
         subject = request.form.get("subject")
         message = request.form.get("message")
+        #date = datetime.date.today()
         dict = {"name": fname, "email": email, "contact": cnum, "subject": subject, "message": message}
         conn_contact = dbconnection.db["contact_messages"]
         conn_contact.insert_one(dict)
-    return "SUCCESSFULY ENTERED!"
+    return " SUCCESSFULY ENTERED! "
 
 if __name__ == '__main__':
     toastr.init_app(app)
