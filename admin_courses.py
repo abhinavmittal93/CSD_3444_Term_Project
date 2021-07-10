@@ -1,3 +1,4 @@
+from bson import ObjectId
 from flask import render_template, request, redirect, flash, session
 import dbconnection
 from flask_toastr import Toastr
@@ -11,10 +12,23 @@ def get_all_courses():
     try:
         collection_name = dbconnection.db["courses"]
         courses_list = collection_name.find()
-        return render_template("admin_courses.html", courses_list=courses_list)
+        return render_template("admin_courses.html", courses_list=courses_list, title='Courses')
     except:
         flash("Error occurred. Please try again!", 'error')
         return render_template("admin_courses.html", courses_list=None)
+
+
+#@login_required
+def delete_course(object_id):
+    try:
+        collection_name = dbconnection.db["courses"]
+        result = collection_name.delete_one({'_id': ObjectId(object_id)})
+        flash("Course Deleted Successfully.", 'success')
+    except:
+        flash("Error occurred. Please try again!", 'error')
+
+    return redirect('/admin/courses')
+
 
 
 class AdminCourses:

@@ -1,4 +1,12 @@
 {% include 'header.html' %}
+
+<script >
+$(document).ready(function() {
+    $('#home_menu_item').addClass('active');
+});
+
+</script>
+
     <h1> Logged In as: </h1>
   <p>{{user.name}}</p>
   <p>{{user.email}}</p>
