@@ -29,7 +29,7 @@ def test():
 
     # x = collection_name.insert_one(mydict)
     # print(x)
-    return render_template("home.html", user=user)
+    return render_template("home.html", user=user, title='Home')
 
 @app.route("/add_new_user")
 def add_new_user():
