@@ -4,7 +4,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 <div class="container">
 <div class="contact-section">
     <h2 class="ct-section-head">CONTACT US</h2>
@@ -13,27 +12,33 @@
       <form method="post" action="{{ url_for('contactus_save') }}">
 			<div class="form-group">
                 <label class="sr-only" for="fname">First Name *</label>
-                <input class="required form-control" id="fname" name="fname" placeholder="First Name&nbsp;*" type="text">
+                <input class="required form-control" id="fname" name="fname" placeholder="First Name&nbsp;*" type="text" required>
             </div>
             <div class="form-group">
                 <label class="sr-only" for="email">E-mail *</label>
-                <input class="required form-control" id="email" name="email" placeholder="Email&nbsp;*" type="text">
+                <input class="required form-control" id="email" name="email" placeholder="Email&nbsp;*" type="email" autocomplete="off" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
             </div>
           <div class="form-group">
                 <label class="sr-only" for="cnum">Phone *</label>
-                <input class="required form-control h5-phone" id="cnum" name="cnum" placeholder="Phone&nbsp;*" type="text">
+                <input class="required form-control h5-phone" id="cnum" name="cnum" placeholder="Phone&nbsp;*" type="text" required maxlength="11">
             </div>
+          <div class="form-group">
+                <label class="sr-only" for="date">Date *</label>
+                <input class="required form-control h5-phone" id="date" name="date" placeholder="Date&nbsp;*" type="date">
+            </div>
+
            <div class="form-group">
                 <label class="sr-only" for="subject">Subject *</label>
-                <input class="required form-control h5-phone" id="subject" name="subject" placeholder="Subject&nbsp;*" type="text">
+                <input class="required form-control h5-phone" id="subject" name="subject" placeholder="Subject&nbsp;*" type="text" required>
             </div>
+
             <div class="form-group">
                 <label class="sr-only" for="message">Type your message here</label>
                 <textarea class="required form-control" id="message" name="message" placeholder="Type your message here&nbsp;*" rows="6"></textarea>
             </div>
 				<button class="btn btn-accent" type="submit">Submit</button>
-      </form>
-			</div>
+        </form>
+      </div>
         <div class="col-md-4 contact-info">
             <div class="phone">
                 <h2>Call</h2>

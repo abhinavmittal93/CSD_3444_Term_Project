@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, session, redirect
 import dbconnection
-import datetime
+
 
 import login
 from user import User
@@ -56,11 +56,11 @@ def contactus_save():
         cnum = request.form.get("cnum")
         subject = request.form.get("subject")
         message = request.form.get("message")
-        date = datetime.date.today()
-        dict = {"name": fname, "email": email, "contact": cnum, "subject": subject, "message": message, "Date": date }
+        date = request.form.get("date")
+        dict = {"name": fname, "email": email, "contact": cnum, "subject": subject, "message": message, "date": date }
         conn_contact = dbconnection.db["contact_messages"]
         conn_contact.insert_one(dict)
-    return " SUCCESSFULY ENTERED! "
+        return " SUCCESSFULY ENTERED! "
 
 if __name__ == '__main__':
     toastr.init_app(app)
