@@ -16,16 +16,16 @@ def check_application_status():
         flash("No record found.", 'error')
         return redirect('/application/status')
     else:
-        result = []
+        result_list = []
         for record in status_records:
             application_details = get_application_details(record['application_id'])
             record['application_details'] = application_details
 
             course_details = get_course_details(application_details['course_id'])
             record['course_details'] = course_details
-            result.append(record)
+            result_list.append(record)
 
-        return render_template("application_status.html", status_records=record, email=email.lower())
+        return render_template("application_status.html", status_records=result_list, email=email.lower())
 
 
 def get_application_details(application_id):

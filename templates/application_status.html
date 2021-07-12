@@ -19,11 +19,10 @@ $(document).ready(function() {
         </tr>
         </thead>
         <tbody>
-        {{status_records}}
         {% for keys in status_records %}
             <tr>
                 <td>{{keys.course_code}}</td>
-                <td>{{keys.course_code}}</td>
+                <td>{{keys.course_details.course_name}}</td>
                 <td>{{keys.status}}</td>
             </tr>
         {% endfor %}
