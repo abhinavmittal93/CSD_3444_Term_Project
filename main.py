@@ -6,6 +6,7 @@ import login
 from user import User
 from flask_toastr import Toastr
 from flask_session import Session
+import Contact_Us
 
 app = Flask(__name__)
 toastr = Toastr(app)
@@ -17,6 +18,8 @@ Session(app)
 app.add_url_rule('/login', view_func=login.login_page)
 app.add_url_rule('/authenticate', view_func=login.authenticate_admin, methods=['POST'])
 app.add_url_rule('/logout', view_func=login.logout)
+app.add_url_rule('/contactus', view_func=Contact_Us.get_contact_us_page)
+app.add_url_rule('/contactus/save', view_func=Contact_Us.save_contact_us_details, methods=['POST'])
 
 
 @app.route("/")
@@ -41,45 +44,6 @@ def add_new_user():
         return 'User created successfully'
     else:
         return response
-
-
-@app.route('/contactus')
-def user():
-    return render_template('contact_us.html')
-
-
-@app.route('/contactus/save', methods=['POST'])
-def contactus_save():
-    if request.method == 'POST':
-        fname = request.form.get("fname")
-        email = request.form.get("email")
-        cnum = request.form.get("cnum")
-        subject = request.form.get("subject")
-        message = request.form.get("message")
-        date = request.form.get("date")
-        dict = {"name": fname, "email": email, "contact": cnum, "subject": subject, "message": message, "date": date }
-        conn_contact = dbconnection.db["contact_messages"]
-        conn_contact.insert_one(dict)
-    flash ('Successfully Entered!','success')
-    return redirect('/contactus')
-'''
-@app.route('/contactinfo')
-def get_data():
-    conn_contact = dbconnection.db["contact_messages"]
-    info_table = []
-    tbl = "<tr><td>Name</td><td>Age</td><td>Section</td></tr>"
-    info_table.append(tbl)
-    for y in conn_contact.find():
-        a = "<tr><td>%s</td>" % y['name']
-        info_table.append(a)
-        b = "<td>%s</td>" % y['email']
-        info_table.append(b)
-        c = "<td>%s</td></tr>" % y['message']
-        info_table.append(c)
-
-'''
-
-
 
 if __name__ == '__main__':
     toastr.init_app(app)
