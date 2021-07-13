@@ -3,14 +3,10 @@
 <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static',filename='styles/contact.css') }}">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<div class="container">
+<h2 class="ct-section-head">CONTACT US</h2>
 <div class="contact-section">
-    <h2 class="ct-section-head">CONTACT US</h2>
     <div class="row contact-fields">
-      <div class="col-md-8 left-form">
+      <div class="col-md-7 left-form">
       <form method="post" action="{{ url_for('save_contact_us_details') }}">
 			<div class="form-group">
                 <label class="sr-only" for="fname">First Name *</label>
@@ -62,7 +58,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 
 {% include 'footer.html' %}

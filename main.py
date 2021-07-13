@@ -17,6 +17,7 @@ toastr = Toastr(app)
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 Session(app)
 
 app.add_url_rule('/login', view_func=login.login_page)
