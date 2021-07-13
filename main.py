@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session, redirect
+from flask import Flask, request, render_template, session, redirect,flash
 import dbconnection
 
 
@@ -60,7 +60,26 @@ def contactus_save():
         dict = {"name": fname, "email": email, "contact": cnum, "subject": subject, "message": message, "date": date }
         conn_contact = dbconnection.db["contact_messages"]
         conn_contact.insert_one(dict)
-        return " SUCCESSFULY ENTERED! "
+    flash ('Successfully Entered!','success')
+    return redirect('/contactus')
+'''
+@app.route('/contactinfo')
+def get_data():
+    conn_contact = dbconnection.db["contact_messages"]
+    info_table = []
+    tbl = "<tr><td>Name</td><td>Age</td><td>Section</td></tr>"
+    info_table.append(tbl)
+    for y in conn_contact.find():
+        a = "<tr><td>%s</td>" % y['name']
+        info_table.append(a)
+        b = "<td>%s</td>" % y['email']
+        info_table.append(b)
+        c = "<td>%s</td></tr>" % y['message']
+        info_table.append(c)
+
+'''
+
+
 
 if __name__ == '__main__':
     toastr.init_app(app)
