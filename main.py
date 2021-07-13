@@ -1,9 +1,12 @@
-from flask import Flask, request, render_template, session, redirect
+from flask import Flask, request, render_template, session, redirect,flash
 import dbconnection
+
+
 import login
 from user import User
 from flask_toastr import Toastr
 from flask_session import Session
+import Contact_Us
 
 app = Flask(__name__)
 toastr = Toastr(app)
@@ -15,6 +18,8 @@ Session(app)
 app.add_url_rule('/login', view_func=login.login_page)
 app.add_url_rule('/authenticate', view_func=login.authenticate_admin, methods=['POST'])
 app.add_url_rule('/logout', view_func=login.logout)
+app.add_url_rule('/contactus', view_func=Contact_Us.get_contact_us_page)
+app.add_url_rule('/contactus/save', view_func=Contact_Us.save_contact_us_details, methods=['POST'])
 
 
 @app.route("/")
@@ -39,7 +44,6 @@ def add_new_user():
         return 'User created successfully'
     else:
         return response
-
 
 if __name__ == '__main__':
     toastr.init_app(app)
