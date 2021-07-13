@@ -1,29 +1,40 @@
+from flask import Flask, render_template, session, redirect
+from flask_toastr import Toastr
+import admin_courses
 from flask import Flask, request, render_template, session, redirect,flash
 import dbconnection
 
 
 import login
-from user import User
-from flask_toastr import Toastr
 from flask_session import Session
+from user import User
 import Contact_Us
 
 app = Flask(__name__)
 toastr = Toastr(app)
+# admin_courses_obj = AdminCourses()
+
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 Session(app)
 
 app.add_url_rule('/login', view_func=login.login_page)
 app.add_url_rule('/authenticate', view_func=login.authenticate_admin, methods=['POST'])
 app.add_url_rule('/logout', view_func=login.logout)
+app.add_url_rule('/admin/courses', view_func=admin_courses.get_all_courses)
+app.add_url_rule('/admin/courses/delete/<string:object_id>', endpoint='delete_course', view_func=admin_courses.delete_course)
+
+
+# app.add_url_rule('/admin/courses', 'get_all_courses', login_required(AdminCourses.get_all_courses(AdminCourses())))
+#app.add_url_rule('/admin/courses', 'get_all_courses', login_required(AdminCourses.get_all_courses(AdminCourses())))
 app.add_url_rule('/contactus', view_func=Contact_Us.get_contact_us_page)
 app.add_url_rule('/contactus/save', view_func=Contact_Us.save_contact_us_details, methods=['POST'])
 
 
 @app.route("/")
-def test():
+def home():
     if not session.get("email"):
         return redirect('/login')
 
@@ -36,11 +47,12 @@ def test():
     # print(x)
     return render_template("home.html", user=user, title='Home')
 
+
 @app.route("/add_new_user")
 def add_new_user():
     user = User("Abhinav Mittal", "abhinavmittal93@gmail.com", "@Bhinav123")
     response = user.create_new_user(user)
-    if(response):
+    if (response):
         return 'User created successfully'
     else:
         return response
