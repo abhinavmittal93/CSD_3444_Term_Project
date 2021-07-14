@@ -23,6 +23,7 @@ $(document).ready(function() {
 
 <div>
     <form action="{{ url_for('save_course') }}" method="POST">
+        <input class="hidden" name="course_id" value="{{course_details._id}}">
         <div class="col-sm-10 form-group">
             <label class="mandatory">Course Code</label>
             <input class="form-control" type="text" name="course_code" id="course_code" maxlength="5" value="{{course_details.course_code}}"
@@ -32,64 +33,69 @@ $(document).ready(function() {
         <div class="col-sm-10 form-group">
             <label class="mandatory">Course Category</label>
             <select class="form-control" name="course_category_id" id="course_category_id">
+                <option value="">Select</option>
                 {% for keys in course_category_list %}
-                    <option selected="selected if {{keys._id == course_details.course_category_id}} else ''" value="{{keys._id}}">{{keys.category_name}}</option>
+                    <option value="{{keys._id}}">
+                        {{keys.category_name}}
+                    </option>
                 {% endfor %}
             </select>
         </div>
 
         <div class="col-sm-10 form-group">
             <label class="mandatory">Course Name</label>
-            <input class="form-control" type="text" name="course_name" value="" required/>
+            <input class="form-control" type="text" name="course_name" value="{{course_details.course_name}}" required/>
         </div>
         <div class="clearfix"></div>
 
         <div class="col-sm-10 form-group">
             <label class="mandatory">Course Details</label>
-            <textarea class="form-control" name="course_details" rows="5" required></textarea>
+            <textarea class="form-control" name="course_details" rows="5" required>{{course_details.course_description}}</textarea>
         </div>
         <div class="clearfix"></div>
 
         <div class="col-sm-10 form-group">
             <label class="mandatory">Admission Requirements</label>
-            <textarea class="form-control" name="admission_requirements" rows="5" required></textarea>
+            <textarea class="form-control" name="admission_requirements" rows="5" required>{{course_details.admission_requirements}}</textarea>
         </div>
         <div class="clearfix"></div>
 
         <div class="col-sm-10 form-group">
             <label class="mandatory">Course Duration</label>
-            <input class="form-control" type="number" name="course_duration" min="1" max="5" value="" required/>
+            <input class="form-control" type="number" name="course_duration" min="1" max="5" value="{{course_details.course_duration}}" required/>
         </div>
         <div class="clearfix"></div>
 
         <div class="col-sm-10 form-group">
             <label class="mandatory">Course Fees</label>
-            <input class="form-control" type="number" name="course_fees" min="1" value="" required/>
+            <input class="form-control" type="number" name="course_fees" min="1" value="{{course_details.course_fees}}" required/>
         </div>
         <div class="clearfix"></div>
 
         <div class="col-sm-10 form-group">
             <label class="mandatory">Co-Op Available?</label>
-            <input type="checkbox" name="is_co_op_available" />
+            <input type="checkbox" name="is_co_op_available" id="is_co_op_available" />
         </div>
         <div class="clearfix"></div>
 
         <div class="col-sm-10 form-group">
             <label>Intakes Available:</label>
             <div>
-                <input id="may_intake" name="may_intake" type="checkbox" checked="checked">
+                <input id="may_intake" name="may_intake" type="checkbox" >
                 <label for="may_intake">MAY</label>
             </div>
             <div>
-                <input id="sept_intake" name="sept_intake" type="checkbox" checked="checked">
+                <input id="sept_intake" name="sept_intake" type="checkbox" >
                 <label for="sept_intake">SEPTEMBER</label>
             </div>
             <div>
-                <input id="jan_intake" name="jan_intake" type="checkbox" checked="checked">
+                <input id="jan_intake" name="jan_intake" type="checkbox" >
                 <label for="jan_intake">JANUARY</label>
             </div>
         </div>
         <div class="clearfix"></div>
+
+
 
         <div>
             <a class="btn btn-light" href="{{ url_for('get_all_courses') }}">Cancel</a>
@@ -97,6 +103,31 @@ $(document).ready(function() {
         </div>
     </form>
 </div>
+<script>
+    $("#course_category_id").val('{{course_details.course_category_id}}');
 
+    if('{{course_details.is_co_op_available}}' == 'True') {
+        $("#is_co_op_available").prop('checked', true);
+    } else {
+        $("#is_co_op_available").prop('checked', false);
+    }
+
+    const intakes_available = {{course_details.intakes_available|safe}};
+    if(intakes_available != []) {
+         $.each(intakes_available, function(index, value) {
+                if(value == 'MAY') {
+                    $("#may_intake").prop('checked', true);
+                }
+
+                if(value == 'SEPT') {
+                    $("#sept_intake").prop('checked', true);
+                }
+
+                if(value == 'JAN') {
+                    $("#jan_intake").prop('checked', true);
+                }
+         });
+    }
+</script>
 
 {% include 'footer.html' %}

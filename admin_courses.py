@@ -11,7 +11,8 @@ def get_all_courses():
         collection_name = dbconnection.db["courses"]
         courses_list = collection_name.find()
         return render_template("admin_courses.html", courses_list=courses_list, title='Courses')
-    except:
+    except Exception as e:
+        print(e)
         flash("Error occurred. Please try again!", 'error')
         return render_template("admin_courses.html", courses_list=None)
 
@@ -22,18 +23,20 @@ def delete_course(object_id):
         collection_name = dbconnection.db["courses"]
         result = collection_name.delete_one({'_id': ObjectId(object_id)})
         flash("Course Deleted Successfully.", 'success')
-    except:
+    except Exception as e:
+        print(e)
         flash("Error occurred. Please try again!", 'error')
 
     return redirect('/admin/courses')
 
 
-def get_add_new_course_page():
+def get_add_new_course_page(course_details={}):
     try:
         course_category_list = course_category.get_course_categories()
-        return render_template("admin_course_details.html", course_category_list=course_category_list,
+        return render_template("admin_course_details.html", course_category_list=course_category_list, course_details=course_details,
                                title="New Course")
-    except:
+    except Exception as e:
+        print(e)
         flash("Error occurred. Please try again!", 'error')
         return redirect('/admin/courses')
 
@@ -44,7 +47,8 @@ def get_edit_course_page(course_id):
         course_details = get_course_details_by_id(course_id)
         return render_template("admin_course_details.html", course_category_list=course_category_list,
                                course_details=course_details, title="Edit Course")
-    except:
+    except Exception as e:
+        print(e)
         flash("Error occurred. Please try again!", 'error')
         return redirect('/admin/courses')
 
@@ -58,6 +62,7 @@ def get_course_details_by_id(course_id):
 def save_course():
     req = request.form
 
+    course_id = request.form["course_id"]
     course_code = request.form["course_code"]
     course_name = request.form["course_name"]
     course_description = request.form["course_details"]
@@ -89,40 +94,61 @@ def save_course():
     missing = list()
 
     for k, v in req.items():
-        if v == "":
+        if v == "" and k != 'course_id':
             missing.append(k)
 
     if missing:
         missing_fields_message = f"Missing fields for {', '.join(missing)}"
         flash(missing_fields_message, 'warning')
-        return redirect('/admin/courses/new', course_details=course)
+        return get_add_new_course_page(course)
 
     try:
-        save_course_details(course)
-        flash("Course added successfully.!", 'success')
+        if course_id:
+            update_course_details_by_id(course, course_id)
+            flash("Course updates successfully!", 'success')
+        else:
+            save_course_details(course)
+            flash("Course added successfully!", 'success')
         return redirect('/admin/courses')
-    except:
+    except Exception as e:
+        print(e)
         flash('An error occurred. Please try again!', 'error')
-        return redirect('/admin/courses/new', course_details=course)
+        if course_id:
+            return get_edit_course_page(course_id)
+        else:
+            return get_add_new_course_page(course)
 
 
 def save_course_details(AdminCourses):
-    try:
-        collection_name = dbconnection.db["courses"]
-        record = {"course_code": AdminCourses.course_name,
-                  "course_name": AdminCourses.course_name,
-                  "course_description": AdminCourses.course_description,
-                  "course_duration": AdminCourses.course_duration,
-                  "course_fees": AdminCourses.course_fees,
-                  "is_co_op_available": AdminCourses.is_co_op_available,
-                  "intakes_available": AdminCourses.intakes_available,
-                  "admission_requirements": AdminCourses.admission_requirements,
-                  "course_category_id": AdminCourses.course_category_id
-                  }
-        response = collection_name.insert_one(record)
-        return response.acknowledged
-    except:
-        return False
+    collection_name = dbconnection.db["courses"]
+    record = {"course_code": AdminCourses.course_code,
+              "course_name": AdminCourses.course_name,
+              "course_description": AdminCourses.course_description,
+              "course_duration": AdminCourses.course_duration,
+              "course_fees": AdminCourses.course_fees,
+              "is_co_op_available": AdminCourses.is_co_op_available,
+              "intakes_available": AdminCourses.intakes_available,
+              "admission_requirements": AdminCourses.admission_requirements,
+              "course_category_id": AdminCourses.course_category_id
+              }
+    response = collection_name.insert_one(record)
+    return response.acknowledged
+
+
+def update_course_details_by_id(AdminCourses, course_id):
+    collection_name = dbconnection.db["courses"]
+    record = {"course_code": AdminCourses.course_code,
+              "course_name": AdminCourses.course_name,
+              "course_description": AdminCourses.course_description,
+              "course_duration": AdminCourses.course_duration,
+              "course_fees": AdminCourses.course_fees,
+              "is_co_op_available": AdminCourses.is_co_op_available,
+              "intakes_available": AdminCourses.intakes_available,
+              "admission_requirements": AdminCourses.admission_requirements,
+              "course_category_id": AdminCourses.course_category_id
+              }
+    response = collection_name.update_one({"_id": ObjectId(str(course_id))}, {"$set": record})
+    return response.acknowledged
 
 
 class AdminCourses:
