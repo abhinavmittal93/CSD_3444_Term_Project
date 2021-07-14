@@ -1,10 +1,8 @@
 from bson import ObjectId
 from flask import render_template, request, redirect, flash, session
 import dbconnection
-from flask_toastr import Toastr
 from login_required_decorator import login_required
-
-toastr = Toastr()
+import course_category
 
 
 @login_required
@@ -18,7 +16,7 @@ def get_all_courses():
         return render_template("admin_courses.html", courses_list=None)
 
 
-#@login_required
+# @login_required
 def delete_course(object_id):
     try:
         collection_name = dbconnection.db["courses"]
@@ -30,11 +28,108 @@ def delete_course(object_id):
     return redirect('/admin/courses')
 
 
+def get_add_new_course_page():
+    try:
+        course_category_list = course_category.get_course_categories()
+        return render_template("admin_course_details.html", course_category_list=course_category_list,
+                               title="New Course")
+    except:
+        flash("Error occurred. Please try again!", 'error')
+        return redirect('/admin/courses')
+
+
+def get_edit_course_page(course_id):
+    try:
+        course_category_list = course_category.get_course_categories()
+        course_details = get_course_details_by_id(course_id)
+        return render_template("admin_course_details.html", course_category_list=course_category_list,
+                               course_details=course_details, title="Edit Course")
+    except:
+        flash("Error occurred. Please try again!", 'error')
+        return redirect('/admin/courses')
+
+
+def get_course_details_by_id(course_id):
+    query = {'_id': ObjectId(course_id)}
+    collection_name = dbconnection.db["courses"]
+    return collection_name.find_one(query)
+
+
+def save_course():
+    req = request.form
+
+    course_code = request.form["course_code"]
+    course_name = request.form["course_name"]
+    course_description = request.form["course_details"]
+    course_duration = request.form["course_duration"]
+    course_fees = request.form["course_fees"]
+
+    is_co_op_available = False
+    if request.form["is_co_op_available"] == 'on':
+        is_co_op_available = True
+
+    may_intake = request.form["may_intake"] if "may_intake" in request.form else ''
+    sept_intake = request.form["sept_intake"] if "sept_intake" in request.form else ''
+    jan_intake = request.form["jan_intake"] if "jan_intake" in request.form else ''
+
+    intakes_available = []
+    if may_intake == 'on':
+        intakes_available.append('MAY')
+    if sept_intake == 'on':
+        intakes_available.append('SEPT')
+    if jan_intake == 'on':
+        intakes_available.append('JAN')
+
+    admission_requirements = request.form["admission_requirements"]
+    course_category_id = request.form["course_category_id"]
+
+    course = AdminCourses(course_code, course_name, course_description, course_duration, course_fees,
+                          is_co_op_available, intakes_available, admission_requirements, course_category_id)
+
+    missing = list()
+
+    for k, v in req.items():
+        if v == "":
+            missing.append(k)
+
+    if missing:
+        missing_fields_message = f"Missing fields for {', '.join(missing)}"
+        flash(missing_fields_message, 'warning')
+        return redirect('/admin/courses/new', course_details=course)
+
+    try:
+        save_course_details(course)
+        flash("Course added successfully.!", 'success')
+        return redirect('/admin/courses')
+    except:
+        flash('An error occurred. Please try again!', 'error')
+        return redirect('/admin/courses/new', course_details=course)
+
+
+def save_course_details(AdminCourses):
+    try:
+        collection_name = dbconnection.db["courses"]
+        record = {"course_code": AdminCourses.course_name,
+                  "course_name": AdminCourses.course_name,
+                  "course_description": AdminCourses.course_description,
+                  "course_duration": AdminCourses.course_duration,
+                  "course_fees": AdminCourses.course_fees,
+                  "is_co_op_available": AdminCourses.is_co_op_available,
+                  "intakes_available": AdminCourses.intakes_available,
+                  "admission_requirements": AdminCourses.admission_requirements,
+                  "course_category_id": AdminCourses.course_category_id
+                  }
+        response = collection_name.insert_one(record)
+        return response.acknowledged
+    except:
+        return False
+
 
 class AdminCourses:
 
     def __init__(self, course_code='', course_name='', course_description='', course_duration='',
-                 course_fees='', is_co_op_available=False, intakes_available=''):
+                 course_fees=0, is_co_op_available=False, intakes_available='', admission_requirements='',
+                 course_category_id=0):
         self.course_code = course_code
         self.course_name = course_name
         self.course_description = course_description
@@ -42,10 +137,5 @@ class AdminCourses:
         self.course_fees = course_fees
         self.is_co_op_available = is_co_op_available
         self.intakes_available = intakes_available
-
-    # @classmethod
-    # def add_new_course(cls, course):
-    #     collection_name = dbconnection.db["courses"]
-    #     record = {"code": course}
-    #     response = collection_name.insert_one(record)
-    #     return response.acknowledged
+        self.admission_requirements = admission_requirements
+        self.course_category_id = course_category_id

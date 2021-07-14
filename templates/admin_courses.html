@@ -11,7 +11,7 @@ $(document).ready(function() {
 <h1>Courses</h1>
 <hr>
 <div class="clearfix">
-    <button type="button" class="btn btn-primary" onclick="">ADD NEW COURSE</button>
+    <a href="{{ url_for('get_add_new_course_page') }}" class="btn btn-primary">ADD NEW COURSE</a>
 </div>
 <br>
 <div>
@@ -30,7 +30,7 @@ $(document).ready(function() {
             <td>{{keys.course_code}}</td>
             <td>{{keys.course_name}}</td>
             <td>
-                <a class="btn btn-primary" href="">EDIT</a>
+                <a class="btn btn-primary" href="{{ url_for('get_edit_course_page', course_id=keys._id) }}">EDIT</a>
                 <a class="btn btn-danger" href="{{ url_for('delete_course', object_id=keys._id) }}">DELETE</a>
             </td>
         </tr>
