@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lambton College </title>
+{% include 'header.html' %}
     <style>
 	.course{
     display: flex;
@@ -85,8 +80,7 @@
 }
 
     </style>
-</head>
-<body>
+
 <h1 ><img src="C:\Users\User\Desktop\New folder\logo.png" alt="college logo" width="300px" height="200px" align ="left">  </h1>
 
     <div style="height:50px;"><marquee style="padding:15px; color:#bed5e4;"> !!!!! Due to Covid-19 online study will be provided till December 2021.!!!!! </marquee></div>
@@ -95,11 +89,7 @@
 
             <h2 class="courseh2-heading" id="courseh2">Health Science</h2>
             <ul class="courseul">
-                <li class="courseli"><a href="{{ url_for('user') }}">PHARMACY TECHNICIAN</a></li>
-                <li class="courseli"><a href="{{ url_for('user') }}">MASSAGE THERAPY</a></li>
-                <li class="courseli"><a href="{{ url_for('user') }}">BACHELOR OF SCIENCE- NURSING</a></li>
-                <li class="courseli"><a href="{{ url_for('user') }}">PERSONAL SUPPORT WORKER</a></li>
-                <li class="courseli"><a href="{{ url_for('user') }}">PRACTICAL NURSING OF BACHELOR OF SCIENCE</a></li>
+
             </ul>
         </div>
         <div class="courseright">
@@ -143,25 +133,5 @@
     </div>
 
 
-    <footer>
-        <div class="footer">
-		 <div class="footer">
-            <h2 style="padding:15px; color:Blue;">Gallery</h2>
-
-
-                <img src="C:\Users\User\Desktop\New folder\college.jpg" width="250px" height="200px" alt="Lambton">
-                <img src="C:\Users\User\Desktop\New folder\building.jpg" width="250px" height="200px" alt="Library">
-                <img src="C:\Users\User\Desktop\New folder\event.jpg" width="250px" height="200px" alt="festival college">
-				<img src="C:\Users\User\Desktop\New folder\festival.jpg" width="250px" height="200px" alt="general">
-
-
-        </div>
-
-        <div class="foot_second">
-
-               <p style="color:red; margin-top: 10px; text-align: center"> &copy;Copyright 2018 All rights reserved. </p>
-            </div>
-
-    </footer>
-</body>
-</html>
+   
+{% include 'footer.html' %}
