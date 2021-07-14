@@ -25,7 +25,7 @@
 {% block content %}
     {% if session['email'] != '' %}
         {% include 'admin_menu.html' %}
-    {% elif request.path.split('/')[1] != 'login' %}
+    {% else %}
         {% include 'menu.html' %}
     {% endif %}
 {% endblock content %}

@@ -36,17 +36,11 @@ app.add_url_rule('/contactus/save', view_func=Contact_Us.save_contact_us_details
 @app.route("/")
 def home():
     if not session.get("email"):
-        return redirect('/login')
-
-    collection_name = dbconnection.db["admins"]
-    user = collection_name.find_one()
-    # return jsonify(message=single_record)
-    # mydict = {"name": "John Doe", "email": "johndoe@gmail.com", "password" : "john123"}
-
-    # x = collection_name.insert_one(mydict)
-    # print(x)
-    return render_template("home.html", user=user, title='Home')
-
+        return render_template("home.html", title='Home')
+    else:
+        collection_name = dbconnection.db["admins"]
+        user = collection_name.find_one()
+        return render_template("admin_home.html", user=user, title='Home')
 
 @app.route("/add_new_user")
 def add_new_user():
