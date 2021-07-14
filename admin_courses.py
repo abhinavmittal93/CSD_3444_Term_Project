@@ -5,11 +5,10 @@ from login_required_decorator import login_required
 import course_category
 
 
-@login_required
-def get_all_courses():
+def get_admin_course_list_page():
+    login_required()
     try:
-        collection_name = dbconnection.db["courses"]
-        courses_list = collection_name.find()
+        courses_list = get_all_courses()
         return render_template("admin_courses.html", courses_list=courses_list, title='Courses')
     except Exception as e:
         print(e)
@@ -17,8 +16,14 @@ def get_all_courses():
         return render_template("admin_courses.html", courses_list=None)
 
 
+def get_all_courses():
+    collection_name = dbconnection.db["courses"]
+    return collection_name.find()
+
+
 # @login_required
 def delete_course(object_id):
+    login_required()
     try:
         collection_name = dbconnection.db["courses"]
         result = collection_name.delete_one({'_id': ObjectId(object_id)})
@@ -31,9 +36,11 @@ def delete_course(object_id):
 
 
 def get_add_new_course_page(course_details={}):
+    login_required()
     try:
         course_category_list = course_category.get_course_categories()
-        return render_template("admin_course_details.html", course_category_list=course_category_list, course_details=course_details,
+        return render_template("admin_course_details.html", course_category_list=course_category_list,
+                               course_details=course_details,
                                title="New Course")
     except Exception as e:
         print(e)
@@ -42,6 +49,7 @@ def get_add_new_course_page(course_details={}):
 
 
 def get_edit_course_page(course_id):
+    login_required()
     try:
         course_category_list = course_category.get_course_categories()
         course_details = get_course_details_by_id(course_id)

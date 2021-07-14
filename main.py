@@ -23,7 +23,7 @@ app.add_url_rule('/login', view_func=login.login_page)
 app.add_url_rule('/authenticate', view_func=login.authenticate_admin, methods=['POST'])
 app.add_url_rule('/logout', view_func=login.logout)
 
-app.add_url_rule('/admin/courses', view_func=admin_courses.get_all_courses)
+app.add_url_rule('/admin/courses', view_func=admin_courses.get_admin_course_list_page)
 app.add_url_rule('/admin/courses/delete/<string:object_id>', endpoint='delete_course', view_func=admin_courses.delete_course)
 app.add_url_rule('/admin/course/new', view_func=admin_courses.get_add_new_course_page)
 app.add_url_rule('/admin/course/edit/<string:course_id>', endpoint='get_edit_course_page', view_func=admin_courses.get_edit_course_page)
