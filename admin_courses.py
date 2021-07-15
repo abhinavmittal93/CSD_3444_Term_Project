@@ -18,7 +18,21 @@ def get_admin_course_list_page():
 
 def get_all_courses():
     collection_name = dbconnection.db["courses"]
-    return collection_name.find()
+    courses_list = collection_name.find()
+
+    result_list = []
+    for record in courses_list:
+        course_category_details = get_coures_category_details(record['course_category_id'])
+        record['course_category_details'] = course_category_details
+        result_list.append(record)
+
+    return result_list
+
+
+def get_coures_category_details(course_category_id):
+    query = {'_id': course_category_id}
+    collection_name = dbconnection.db["course_category"]
+    return collection_name.find_one(query)
 
 
 # @login_required
@@ -78,7 +92,7 @@ def save_course():
     course_fees = request.form["course_fees"]
 
     is_co_op_available = False
-    if request.form["is_co_op_available"] == 'on':
+    if "is_co_op_available" in request.form and request.form["is_co_op_available"] == 'on':
         is_co_op_available = True
 
     may_intake = request.form["may_intake"] if "may_intake" in request.form else ''
@@ -137,7 +151,7 @@ def save_course_details(AdminCourses):
               "is_co_op_available": AdminCourses.is_co_op_available,
               "intakes_available": AdminCourses.intakes_available,
               "admission_requirements": AdminCourses.admission_requirements,
-              "course_category_id": AdminCourses.course_category_id
+              "course_category_id": ObjectId(str(AdminCourses.course_category_id))
               }
     response = collection_name.insert_one(record)
     return response.acknowledged
@@ -153,7 +167,7 @@ def update_course_details_by_id(AdminCourses, course_id):
               "is_co_op_available": AdminCourses.is_co_op_available,
               "intakes_available": AdminCourses.intakes_available,
               "admission_requirements": AdminCourses.admission_requirements,
-              "course_category_id": AdminCourses.course_category_id
+              "course_category_id": ObjectId(str(AdminCourses.course_category_id))
               }
     response = collection_name.update_one({"_id": ObjectId(str(course_id))}, {"$set": record})
     return response.acknowledged
