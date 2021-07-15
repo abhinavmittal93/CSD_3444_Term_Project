@@ -3,6 +3,8 @@ import admin_courses
 from flask import Flask, request, render_template, session, redirect, flash
 import dbconnection
 
+import courses
+
 import login
 from flask_session import Session
 from user import User
@@ -31,6 +33,9 @@ app.add_url_rule('/admin/course/save', view_func=admin_courses.save_course, meth
 app.add_url_rule('/contactus', view_func=Contact_Us.get_contact_us_page)
 app.add_url_rule('/contactus/save', view_func=Contact_Us.save_contact_us_details, methods=['POST'])
 
+app.add_url_rule('/courses', view_func=courses.get_courses_page)
+app.add_url_rule('/course/apply', view_func=courses.get_course_application_page)
+app.add_url_rule('/course/apply/save', view_func=courses.apply_course, methods=['POST'])
 
 
 @app.route("/")

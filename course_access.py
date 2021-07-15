@@ -19,4 +19,3 @@ def get_course_detail_by_id(course_id):
     collection_name = dbconnection.db["courses"]
     return collection_name.find_one(query)
 
-

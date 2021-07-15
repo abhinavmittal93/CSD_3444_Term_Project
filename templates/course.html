@@ -81,35 +81,39 @@
 
     </style>
 
-<h1 ><img src="C:\Users\User\Desktop\New folder\logo.png" alt="college logo" width="300px" height="200px" align ="left">  </h1>
 
-    <div style="height:50px;"><marquee style="padding:15px; color:#bed5e4;"> !!!!! Due to Covid-19 online study will be provided till December 2021.!!!!! </marquee></div>
+    <div style="height:50px;"><marquee style="padding:15px; color:rgb(15, 33, 68);;"> !!!!! Due to Covid-19 online study will be provided till December 2021.!!!!! </marquee></div>
     <div class="course">
         <div class="courseleft">
 
+
             <h2 class="courseh2-heading" id="courseh2">Health Science</h2>
             <ul class="courseul">
-
+                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">PHARMACY TECHNICIAN</a></li>
+                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">MASSAGE THERAPY</a></li>
+                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">BACHELOR OF SCIENCE- NURSING</a></li>
+                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">PERSONAL SUPPORT WORKER</a></li>
+                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">PRACTICAL NURSING OF BACHELOR OF SCIENCE</a></li>
             </ul>
         </div>
         <div class="courseright">
             <h2 class="courseh2-heading">Information Technology</h2>
             <ul class="courseul">
-                <li class="courseli"><a href="{{ url_for('user') }}">ADVANCED PROJECT MANAGEMENT</a></li>
-                <li class="courseli"><a href="{{ url_for('user') }}">STRATEGIC LEADERSHIP</a></li>
-                <li class="courseli"><a href="{{ url_for('user') }}">COMPUTER PROGRAMMER</a></li>
-                <li class="courseli"><a href="{{ url_for('user') }}">COMPUTER SOFTWARE AND DATABASE DEVELOPMENT</a></li>
-                <li class="courseli"><a href="{{ url_for('user') }}">CYBER INFRASTRUCTURE SPECIALIST/a></li>
+                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">ADVANCED PROJECT MANAGEMENT</a></li>
+                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">STRATEGIC LEADERSHIP</a></li>
+                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">COMPUTER PROGRAMMER</a></li>
+                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">COMPUTER SOFTWARE AND DATABASE DEVELOPMENT</a></li>
+                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">CYBER INFRASTRUCTURE SPECIALIST/a></li>
             </ul>
         </div>
         <div class="courseleft">
-                <h2 class="courseh2-heading" id="course1h2">Business</h2>
+                <h2 class="courseh2-heading" id="course1h2" style=" color:rgb(15, 33, 68);;">Business</h2>
                 <ul class="courseul">
-                    <li class="courseli"><a href="{{ url_for('user') }}"> MARKETING MANAGEMENT</a></li>
-                    <li class="courseli"><a href="{{ url_for('user') }}">BUSINESS MANAGEMENT</a></li>
-                    <li class="courseli"><a href="{{ url_for('user') }}">BRAND MANAGEMENT</a></li>
-                    <li class="courseli"><a href="{{ url_for('user') }}">SPORTS AND RECREATIONAL MANAGEMENT</a></li>
-                    <li class="courseli"><a href="{{ url_for('user') }}">OFFICE ADMINISTRATION </a></li>
+                    <li class="courseli"><a href="{{ url_for('get_course_application_page') }}"> MARKETING MANAGEMENT</a></li>
+                    <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">BUSINESS MANAGEMENT</a></li>
+                    <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">BRAND MANAGEMENT</a></li>
+                    <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">SPORTS AND RECREATIONAL MANAGEMENT</a></li>
+                    <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">OFFICE ADMINISTRATION </a></li>
                 </ul>
             </div>
     </div>
@@ -133,5 +137,5 @@
     </div>
 
 
-   
+
 {% include 'footer.html' %}

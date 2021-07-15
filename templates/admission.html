@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Lambton College</title>
+{% include 'header.html' %}
     <style>
      form{
     width: 50%;
@@ -57,16 +51,16 @@ input[type="submit"]:hover{
     border-color: red;
 }
     </style>
-</head>
+
 <body>
 
 
          <div id="para" class="parallax"></div>
-		 <h1 style= "text-align: center; color: #074972;">Lambton College  </h1>
+
 		 <h2 style= "text-align: center; color: #074972;text-decoration: underline"> Admission Form</h2>
 
 
-        <form action="{{ url_for('insert') }}" method="POST">
+        <form action="{{ url_for('apply_course') }}" method="POST">
             <label for="name">Student Name</label><input type="text" name="name" required> <br>
             <label for="name">Father's Name</label><input type="text" name="fname"> <br>
             <label for="name">Mother's Name</label><input type="text" name="mname"> <br>
@@ -110,4 +104,4 @@ input[type="submit"]:hover{
          <p style="color:red; margin-top: 10px; text-align: center;"> &copy;Copyright 2018 All rights reserved.</p>
 
 </body>
-</html>
+{% include 'footer.html' %}
