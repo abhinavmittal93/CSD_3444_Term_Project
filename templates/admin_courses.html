@@ -1,8 +1,10 @@
 {% include 'header.html' %}
-
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script>
 $(document).ready(function() {
     $('#courses_menu_item').addClass('active');
+    $('.table').DataTable();
 });
 
 
@@ -11,7 +13,7 @@ $(document).ready(function() {
 <h1>Courses</h1>
 <hr>
 <div class="clearfix">
-    <button type="button" class="btn btn-primary" onclick="">ADD NEW COURSE</button>
+    <a href="{{ url_for('get_add_new_course_page') }}" class="btn btn-primary">ADD NEW COURSE</a>
 </div>
 <br>
 <div>
@@ -21,6 +23,7 @@ $(document).ready(function() {
         <tr>
             <th scope="col">Code</th>
             <th scope="col">Name</th>
+            <th scope="col">Category</th>
             <th scope="col">Action</th>
         </tr>
         </thead>
@@ -29,8 +32,9 @@ $(document).ready(function() {
         <tr>
             <td>{{keys.course_code}}</td>
             <td>{{keys.course_name}}</td>
+            <td>{{keys.course_category_details.category_name}}</td>
             <td>
-                <a class="btn btn-primary" href="">EDIT</a>
+                <a class="btn btn-primary" href="{{ url_for('get_edit_course_page', course_id=keys._id) }}">EDIT</a>
                 <a class="btn btn-danger" href="{{ url_for('delete_course', object_id=keys._id) }}">DELETE</a>
             </td>
         </tr>

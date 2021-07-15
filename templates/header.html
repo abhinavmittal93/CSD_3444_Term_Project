@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="{{ url_for('static',filename='styles/styles.css') }}" rel="stylesheet">
+
+
 
 {{ toastr.include_jquery() }}
 {{ toastr.include_toastr_css() }}
@@ -22,9 +25,9 @@
 </head>
 <body>
 {% block content %}
-    {% if session['email'] != '' %}
+    {% if session.get("email") != '' and session.get("email") is not none %}
         {% include 'admin_menu.html' %}
-    {% elif request.path.split('/')[1] != 'login' %}
+    {% else %}
         {% include 'menu.html' %}
     {% endif %}
 {% endblock content %}

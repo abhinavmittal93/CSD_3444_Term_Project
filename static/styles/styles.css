@@ -1,0 +1,16 @@
+.rowborder {
+    border-bottom: 1px solid #CCCCCC;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+.mandatory::before {
+    width: auto;
+    content: "*";
+    margin-right: 2px;
+    color: red;
+}
+
+.hidden{
+    display:none;
+}

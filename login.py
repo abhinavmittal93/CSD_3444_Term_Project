@@ -51,6 +51,6 @@ def authenticate_admin():
 
 
 def logout():
-    session["email"] = ''
+    session.pop('email',None)
     flash("Logged out successfully.", 'success')
     return redirect('/login')

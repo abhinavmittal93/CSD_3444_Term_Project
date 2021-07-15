@@ -3,11 +3,6 @@ import functools
 from flask import session, redirect, url_for, request
 
 
-def login_required(func):
-    @functools.wraps(func)
-    def secure_function(*args, **kwargs):
-        if "email" not in session:
-            return redirect(url_for("login_page", next=request.url))
-        return func(*args, **kwargs)
-
-    return secure_function
+def login_required():
+    if "email" not in session or session.get("email") == '':
+        return redirect(url_for("login_page"))
