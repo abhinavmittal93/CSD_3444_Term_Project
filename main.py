@@ -1,7 +1,6 @@
-from flask import Flask, render_template, session, redirect
 from flask_toastr import Toastr
 import admin_courses
-from flask import Flask, request, render_template, session, redirect, flash
+from flask import Flask, render_template, session
 import dbconnection
 
 import courses
@@ -13,7 +12,6 @@ import Contact_Us
 
 app = Flask(__name__)
 toastr = Toastr(app)
-# admin_courses_obj = AdminCourses()
 
 
 app.config["SESSION_PERMANENT"] = False
@@ -53,7 +51,7 @@ def home():
 def add_new_user():
     user = User("Abhinav Mittal", "abhinavmittal93@gmail.com", "@Bhinav123")
     response = user.create_new_user(user)
-    if (response):
+    if response:
         return 'User created successfully'
     else:
         return response
