@@ -1,5 +1,6 @@
 {% include 'header.html' %}
     <style>
+
 	.course{
     display: flex;
     flex-wrap: wrap;
@@ -79,8 +80,8 @@
     text-align: justify;
 }
 
-    </style>
 
+    </style>
 
     <div style="height:50px;"><marquee style="padding:15px; color:rgb(15, 33, 68);;"> !!!!! Due to Covid-19 online study will be provided till December 2021.!!!!! </marquee></div>
     <div class="course">
@@ -89,36 +90,30 @@
 
             <h2 class="courseh2-heading" id="courseh2">Health Science</h2>
             <ul class="courseul">
-                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">PHARMACY TECHNICIAN</a></li>
-                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">MASSAGE THERAPY</a></li>
-                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">BACHELOR OF SCIENCE- NURSING</a></li>
-                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">PERSONAL SUPPORT WORKER</a></li>
-                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">PRACTICAL NURSING OF BACHELOR OF SCIENCE</a></li>
+                {% for keys in health_sci_course_list %}
+                    <li class="courseli"><a href="{{ url_for('get_course_application_page', course_id=keys._id) }}">{{keys.course_name}}</a></li>
+                {% endfor %}
             </ul>
         </div>
         <div class="courseright">
             <h2 class="courseh2-heading">Information Technology</h2>
             <ul class="courseul">
-                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">ADVANCED PROJECT MANAGEMENT</a></li>
-                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">STRATEGIC LEADERSHIP</a></li>
-                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">COMPUTER PROGRAMMER</a></li>
-                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">COMPUTER SOFTWARE AND DATABASE DEVELOPMENT</a></li>
-                <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">CYBER INFRASTRUCTURE SPECIALIST/a></li>
+                {% for keys in infor_tech_course_list %}
+                    <li class="courseli"><a href="{{ url_for('get_course_application_page', course_id=keys._id) }}">{{keys.course_name}}</a></li>
+                {% endfor %}
             </ul>
         </div>
         <div class="courseleft">
                 <h2 class="courseh2-heading" id="course1h2" style=" color:rgb(15, 33, 68);;">Business</h2>
                 <ul class="courseul">
-                    <li class="courseli"><a href="{{ url_for('get_course_application_page') }}"> MARKETING MANAGEMENT</a></li>
-                    <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">BUSINESS MANAGEMENT</a></li>
-                    <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">BRAND MANAGEMENT</a></li>
-                    <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">SPORTS AND RECREATIONAL MANAGEMENT</a></li>
-                    <li class="courseli"><a href="{{ url_for('get_course_application_page') }}">OFFICE ADMINISTRATION </a></li>
+                    {% for keys in business_course_list %}
+                    <li class="courseli"><a href="{{ url_for('get_course_application_page', course_id=keys._id) }}">{{keys.course_name}}</a></li>
+                {% endfor %}
                 </ul>
             </div>
     </div>
     <div class="course-container">
-        <h2>Crefully took the course for study! </h2></div>
+        <h2>Carefully took the course for study! </h2></div>
 
     <div id="paper">
             <i class="eligibility"></i>
