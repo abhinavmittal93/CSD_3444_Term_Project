@@ -42,7 +42,8 @@ app.add_url_rule('/course/apply/save', view_func=courses.apply_course, methods=[
 @app.route("/")
 def home():
     if not session.get("email"):
-        return render_template("home.html", title='Home')
+        #return render_template("home.html", title='Home')
+        return redirect('/courses')
     else:
         collection_name = dbconnection.db["admins"]
         user = collection_name.find_one()
