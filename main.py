@@ -59,6 +59,15 @@ def add_new_user():
         return response
 
 
+@app.errorhandler(404)
+def handle_page_not_found_error(e):
+    return render_template('404.html', title="Page Not Found"), 404
+
+
+@app.errorhandler(500)
+def handle_internal_server_error(e):
+    return render_template('500.html', title="Internal Server Error"), 500
+
 if __name__ == '__main__':
     toastr.init_app(app)
     app.run()
