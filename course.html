@@ -1,0 +1,136 @@
+{% include 'header.html' %}
+    <style>
+
+	.course{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    background: #074972;
+    padding: 50px 0px;
+}
+.courseleft{
+    flex: 30%;
+    background: #bed5e4;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow:10px 5px 16px black;
+}
+.courseright{
+    flex: 30%;
+    background: #bed5e4;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 10px 5px 16px black;
+}
+.courseh2-heading{
+    padding: 20px 10px;
+    margin-left: 10%;
+}
+#courseh2{
+    margin-left: 20%;
+}
+#course1h2{
+    margin-left: 6px;
+}
+.courseh3-heading{
+    margin-left: 48%;
+}
+.courseli{
+    float: none;
+}
+.courseli a{
+    color: rgb(72, 97, 114);
+}
+.courseli a:hover{
+    color: rgb(15, 33, 68);
+    font-weight: bolder;
+}
+.course-container{
+    padding: 20px;
+    margin: 0px 100px;
+}
+.course-container h2{
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    background: linear-gradient(to right, goldenrod 10%, #074972 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}
+#paper{
+    height: 10px;
+}
+#paper i{
+    font-size: 30px;
+    color: goldenrod;
+    background: #074972;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 10px 10px 16px black;
+    position: relative;
+    top: 50px;
+}
+.course-para{
+    margin-left: 100px;
+    line-height: 30px;
+    padding-top: 20px;
+    text-align: justify;
+}
+
+
+    </style>
+
+    <div style="height:50px;"><marquee style="padding:15px; color:rgb(15, 33, 68);;"> !!!!! Due to Covid-19 online study will be provided till December 2021.!!!!! </marquee></div>
+    <div class="course">
+        <div class="courseleft">
+
+
+            <h2 class="courseh2-heading" id="courseh2">Health Science</h2>
+            <ul class="courseul">
+                {% for keys in health_sci_course_list %}
+                    <li class="courseli"><a href="{{ url_for('get_course_application_page', course_id=keys._id) }}">{{keys.course_name}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="courseright">
+            <h2 class="courseh2-heading">Information Technology</h2>
+            <ul class="courseul">
+                {% for keys in infor_tech_course_list %}
+                    <li class="courseli"><a href="{{ url_for('get_course_application_page', course_id=keys._id) }}">{{keys.course_name}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="courseleft">
+                <h2 class="courseh2-heading" id="course1h2" style=" color:rgb(15, 33, 68);;">Business</h2>
+                <ul class="courseul">
+                    {% for keys in business_course_list %}
+                    <li class="courseli"><a href="{{ url_for('get_course_application_page', course_id=keys._id) }}">{{keys.course_name}}</a></li>
+                {% endfor %}
+                </ul>
+            </div>
+    </div>
+    <div class="course-container">
+        <h2>Carefully took the course for study! </h2></div>
+
+    <div id="paper">
+            <i class="eligibility"></i>
+        </div>
+    <div class="course-para">
+        <p>
+            <h4>Student Rights and Responsibilities and Discipline</h4>
+            Each student registered at Lambton College is a member of the Lambton College community.
+			As a member of the community, each student has certain rights that will be respected by
+			the College and other members of the community, and specific responsibilities as a student
+			member of the community.  These rights and responsibilities serve as the foundation for the
+			relationship between the student and the College community and so form the basis for the interaction
+			between the student and other members of the College community - students, the College and its
+			employees - and for the conduct expected of each student in the College community.
+        </p>
+    </div>
+
+
+
+{% include 'footer.html' %}
