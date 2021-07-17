@@ -53,6 +53,8 @@ def get_add_new_course_page(course_details={}):
     login_required()
     try:
         course_category_list = course_category.get_course_categories()
+        if course_details == {}:
+            course_details['intakes_available'] = []
         return render_template("admin_course_details.html", course_category_list=course_category_list,
                                course_details=course_details,
                                title="New Course")
@@ -127,7 +129,7 @@ def save_course():
     try:
         if course_id:
             update_course_details_by_id(course, course_id)
-            flash("Course updates successfully!", 'success')
+            flash("Course updated successfully!", 'success')
         else:
             save_course_details(course)
             flash("Course added successfully!", 'success')
@@ -176,7 +178,7 @@ def update_course_details_by_id(AdminCourses, course_id):
 class AdminCourses:
 
     def __init__(self, course_code='', course_name='', course_description='', course_duration='',
-                 course_fees=0, is_co_op_available=False, intakes_available='', admission_requirements='',
+                 course_fees=0, is_co_op_available=False, intakes_available=[], admission_requirements='',
                  course_category_id=0):
         self.course_code = course_code
         self.course_name = course_name

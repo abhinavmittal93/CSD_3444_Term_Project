@@ -17,7 +17,7 @@ $(document).ready(function() {
         <h2>{{title}}</h2>
     </div>
     <div class="col-sm-4 text-right" style="margin-top:10px;">
-        <label><a href="{{ url_for('get_add_new_course_page') }}">Back to Courses</a></label>
+        <label><a href="{{ url_for('get_admin_course_list_page') }}">Back to Courses</a></label>
     </div>
 </div>
 
@@ -98,7 +98,7 @@ $(document).ready(function() {
 
 
         <div>
-            <a class="btn btn-light" href="{{ url_for('get_add_new_course_page') }}">Cancel</a>
+            <a class="btn btn-light" href="{{ url_for('get_admin_course_list_page') }}">Cancel</a>
             <button class="btn btn-primary" type="submit">Save Details</button>
         </div>
     </form>
