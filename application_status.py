@@ -26,7 +26,7 @@ def check_application_status():
             record['course_details'] = course_details
             result_list.append(record)
 
-        return render_template("application_status.html", status_records=result_list, email=email.lower())
+        return render_template("application_status.html", status_records=result_list, email=email.lower(), title="Application Status")
 
 
 def get_application_details(application_id):
