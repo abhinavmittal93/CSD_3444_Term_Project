@@ -6,27 +6,23 @@ $(document).ready(function() {
 });
 </script>
 
+<style>
+    .card-body-styling {
+
+    }
+</style>
+
 <h1>Application Status for {{email}}</h1>
 <hr>
 <div>
-
-    <table class="table table-hover">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">Course Code</th>
-            <th scope="col">Course Name</th>
-            <th scope="col">Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for keys in status_records %}
-            <tr>
-                <td>{{keys.course_code}}</td>
-                <td>{{keys.course_details.course_name}}</td>
-                <td>{{keys.status}}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% for keys in status_records %}
+    {{keys}}
+    <div class="card">
+        <div class="card-body">
+            <div class="col-sm-12">{{keys.course_details.course_name}} - {{keys.course_details.course_code}}</div>
+            {{keys.status}}
+        </div>
+    </div>
+    {% endfor %}
 </div>
 {% include 'footer.html' %}
