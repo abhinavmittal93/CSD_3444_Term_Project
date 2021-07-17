@@ -1,0 +1,20 @@
+{% include 'header.html' %}
+<div class="row rowborder">
+    <div class="col-sm-8">
+        <h2>{{title}}</h2>
+    </div>
+</div>
+<div>
+
+    <form action="{{url_for('check_application_status')}}" method="POST">
+        <div class="form-group">
+            <input class="form-control" type="email" placeholder="Enter Email" name="email" required>
+        </div>
+        <div style="text-align:center;">
+            <button class="btn btn-primary" type="submit">Check Status</button>
+        </div>
+
+    </form>
+</div>
+
+{% include 'footer.html' %}

@@ -1,0 +1,90 @@
+{% include 'header.html' %}
+
+<script>
+$(document).ready(function() {
+    $('#application_status_page_item').addClass('active');
+});
+</script>
+
+<style>
+    .card-body-styling {
+
+    }
+</style>
+
+<h1>Application Status for {{email}}</h1>
+<hr>
+<div>
+    {% for keys in status_records %}
+    <br>
+    <div class="card">
+        {% if (keys.status == 'ACCPT') %}
+            <div class="card-body" style="background-color:lightgreen;">
+        {% elif (keys.status == 'RJCT') %}
+            <div class="card-body" style="background-color:#ffbbbb;">
+        {% else %}
+            <div class="card-body" style="background-color:#efefad;">
+        {% endif %}
+            <div class="col-sm-12" style="font-size:30px;"><b>{{keys.course_details.course_name}} - {{keys.course_details.course_code}}</b></div>
+            <br>
+            <div class="row col-sm-8 pull-left">
+                <div>
+                    <span class="col-sm-2">
+                        <label>Course Duration: </label>
+                        {{keys.course_details.course_duration}} years
+                    </span>
+                    <span class="col-sm-10">
+                        <label>Course Fees: </label>
+                        {{keys.course_details.course_fees}} years
+                    </span>
+                </div>
+                <div>
+                    <span class="col-sm-2">
+                        <label>Co-Op Available: </label>
+                            {% if (keys.course_details.is_co_op_available == True) %}
+                                Yes
+                            {% else %}
+                                No
+                            {% endif %}
+                    </span>
+                    <span class="col-sm-10">
+                        <label>Intakes Available: </label>
+                        {% if (keys.course_details.intakes_available | length > 0) %}
+                            {% for intake in keys.course_details.intakes_available %}
+                                {% if intake == "MAY" %}
+                                  May
+                                {% endif %}
+
+                                {% if intake == "SEPT" %}
+                                  September
+                                {% endif %}
+
+                                {% if intake == "JAN" %}
+                                  January
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            None
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-sm-12">
+                    <label>Status Updated On: </label>
+                    {{keys.date.strftime('%Y-%m-%d')}}
+                </div>
+            </div>
+            <div class="col-sm-3 pull-right">
+                {% if (keys.status == 'ACCPT') %}
+                    <span style="color:green;"><i class="fa fa-check-circle fa-2" aria-hidden="true"></i>Accepted</span>
+                {% elif (keys.status == 'RJCT') %}
+                    <span style="color:red;"><i class="fa fa-times-circle fa-2" aria-hidden="true"></i>Rejected</span>
+                {% else %}
+                    <span style="color:yellow;"><i class="fa fa-exclamation-triangle fa-2" aria-hidden="true"></i>Pending</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% include 'footer.html' %}
