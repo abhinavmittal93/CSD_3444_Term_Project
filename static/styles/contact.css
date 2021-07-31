@@ -5,6 +5,19 @@
     border-right: none;
     box-shadow: none;
 }
+.img-bg{
+
+  background-size: auto;
+  height: 100px;
+  width: 100px;
+  opacity: 0.1;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+   display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 .contact-fields {
   padding:40px 0px 0px;
 }
@@ -63,8 +76,13 @@
     letter-spacing: 0.3px;
 }
 .btn.btn-accent {
-    background: #2fbfbc;
-    color: white;
+    background-color: #04AA6D;
+      color: white;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      width: 20%;
+      opacity: 0.9;
 }
 .btn.btn-accent:hover {
     background: #269694;
