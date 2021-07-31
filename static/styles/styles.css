@@ -2,6 +2,11 @@
     border-bottom: 1px solid #CCCCCC;
     padding-bottom: 5px;
     margin-bottom: 20px;
+    margin-top:170px;
+    text-align:center;
+    text-size:50px;
+    margin-left:300px;
+
 }
 
 .mandatory::before {
@@ -13,4 +18,26 @@
 
 .hidden{
     display:none;
+}
+.app-img{
+background-size: cover;
+
+}
+.form-group{
+font-family: 'Raleway', sans-serif;
+    font-weight: 900;
+    color: #101f1d;
+    font-size: 20px;
+    text-transform: uppercase;
+    padding-top: 45px;
+    letter-spacing: 1.25px;
+    margin-bottom: 5px;
+
+}
+.form-control{
+font-family: 'Raleway', sans-serif;
+    font-weight: 900;
+    color: #101f1d;
+    font-size: 20px;
+    letter-spacing: 1.25px;
 }
