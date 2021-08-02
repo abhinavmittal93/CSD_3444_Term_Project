@@ -23,7 +23,8 @@ def get_courses_page():
             business_course_list = collection_name.find(query)
 
     return render_template("course.html", health_sci_course_list=health_sci_course_list,
-                           infor_tech_course_list=infor_tech_course_list, business_course_list=business_course_list)
+                           infor_tech_course_list=infor_tech_course_list, business_course_list=business_course_list,
+                           title="Courses")
 
 
 def get_course_application_page(course_id):

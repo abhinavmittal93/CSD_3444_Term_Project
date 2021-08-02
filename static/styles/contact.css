@@ -5,6 +5,19 @@
     border-right: none;
     box-shadow: none;
 }
+.img-bg{
+
+  background-size: auto;
+  height: 100px;
+  width: 100px;
+  opacity: 0.1;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+   display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 .contact-fields {
   padding:40px 0px 0px;
 }
@@ -63,8 +76,13 @@
     letter-spacing: 0.3px;
 }
 .btn.btn-accent {
-    background: #2fbfbc;
-    color: white;
+    background-color: #04AA6D;
+      color: white;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      width: 20%;
+      opacity: 0.9;
 }
 .btn.btn-accent:hover {
     background: #269694;
@@ -214,4 +232,83 @@ a {
   .contact-info {
     padding-left: 110px;
   }
+}
+
+.rowborder {
+    border-bottom: 1px solid #CCCCCC;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    margin-top:170px;
+    text-align:center;
+    text-size:50px;
+    margin-left:300px;
+
+}
+
+.mandatory::before {
+    width: auto;
+    content: "*";
+    margin-right: 10px;
+    color: red;
+}
+
+.hidden{
+    display:none;
+}
+.app-img{
+background-size: cover;
+
+}
+.form-group{
+font-family: 'Raleway', sans-serif;
+    font-weight: 900;
+    color: #101f1d;
+    font-size: 20px;
+    text-transform: uppercase;
+    padding-top: 45px;
+    letter-spacing: 1.25px;
+    margin-bottom: 5px;
+
+}
+.form-control{
+font-family: 'Raleway', sans-serif;
+    font-weight: 900;
+    color: #101f1d;
+    font-size: 20px;
+    letter-spacing: 1.25px;
+}
+.input[type=text] {
+
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid red;
+}
+.input[type=email]{
+padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid red;
+}
+.input[type=tel]{
+padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid red;
+}
+.btn{
+background-color: #c9e1e9;
+  border: solid;
+  color: black;
+  padding: 20px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  margin-left:250px;
 }

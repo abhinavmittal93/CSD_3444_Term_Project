@@ -1,20 +1,40 @@
 {% include 'header.html' %}
-<div class="row rowborder">
-    <div class="col-sm-8">
-        <h2>{{title}}</h2>
-    </div>
-</div>
-<div>
+<link rel="stylesheet" href="{{ url_for('static',filename='styles/contact.css') }}">
 
-    <form action="{{url_for('check_application_status')}}" method="POST">
+<style>
+    body {
+        background-image: url("/static/img/appstatus2.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+    }
+    .btn {
+        margin-left: 0px !Important;
+    }
+</style>
+
+<script>
+$(document).ready(function() {
+    $('#application_status_page_item').addClass('active');
+});
+</script>
+
+<div class="row rowborder">
+    <h2 >{{title}}</h2>
+</div>
+
+    <form action="{{url_for('check_application_status')}}" method="POST" >
+        <br>
+        <br>
         <div class="form-group">
             <input class="form-control" type="email" placeholder="Enter Email" name="email" required>
+            <br>
+            <br>
         </div>
         <div style="text-align:center;">
             <button class="btn btn-primary" type="submit">Check Status</button>
         </div>
 
     </form>
-</div>
-
 {% include 'footer.html' %}
