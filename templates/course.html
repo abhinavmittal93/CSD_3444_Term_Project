@@ -112,7 +112,7 @@ $(document).ready(function() {
             </ul>
         </div>
         <div class="courseright">
-            <h2 class="courseh2-heading"  id="courseh3" >Computer Science</h2>
+            <h2 class="courseh2-heading"  id="courseh3" >Information Technology</h2>
             <ul class="courseul">
                 {% for keys in infor_tech_course_list %}
                     <li class="courseli"><a href="{{ url_for('get_course_application_page', course_id=keys._id) }}">{{keys.course_name}}</a></li>

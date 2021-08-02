@@ -1,12 +1,28 @@
 {% include 'header.html' %}
 <link rel="stylesheet" href="{{ url_for('static',filename='styles/contact.css') }}">
+
+<style>
+    body {
+        background-image: url("/static/img/appstatus2.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+    }
+    .btn {
+        margin-left: 0px !Important;
+    }
+</style>
+
+<script>
+$(document).ready(function() {
+    $('#application_status_page_item').addClass('active');
+});
+</script>
+
 <div class="row rowborder">
-
-        <h2 >{{title}}</h2>
-
+    <h2 >{{title}}</h2>
 </div>
-
-    <body class="app-img"   background="/static/img/appstatus2.jpg"  >
 
     <form action="{{url_for('check_application_status')}}" method="POST" >
         <br>
@@ -21,11 +37,4 @@
         </div>
 
     </form>
-
-
-    </body>
-
-
-
-
 {% include 'footer.html' %}
