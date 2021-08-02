@@ -39,6 +39,16 @@ def get_course_application_page(course_id):
         return redirect('/courses')
 
 
+def get_course_view_page(course_id):
+    try:
+        course_details = admin_courses.get_course_details_by_id(course_id)
+        return render_template("course_view.html", course_details=course_details, title='Course - ' + course_details['course_name'])
+    except Exception as e:
+        print(e)
+        flash("Error occurred. Please try again!", 'error')
+        return redirect('/courses')
+
+
 def apply_course():
     try:
         stname = request.form.get("stname")
