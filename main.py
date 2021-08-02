@@ -1,6 +1,6 @@
 from flask_toastr import Toastr
 import admin_courses
-from flask import Flask, render_template, session, redirect
+from flask import Flask, render_template, session, redirect, request
 import dbconnection
 
 import courses
@@ -24,6 +24,7 @@ app.add_url_rule('/login', view_func=login.login_page)
 app.add_url_rule('/authenticate', view_func=login.authenticate_admin, methods=['POST'])
 app.add_url_rule('/logout', view_func=login.logout)
 
+
 app.add_url_rule('/admin/courses', view_func=admin_courses.get_admin_course_list_page)
 app.add_url_rule('/admin/courses/delete/<string:object_id>', endpoint='delete_course', view_func=admin_courses.delete_course)
 app.add_url_rule('/admin/course/new', view_func=admin_courses.get_add_new_course_page)
@@ -44,12 +45,19 @@ app.add_url_rule('/application/status/check', view_func=application_status.check
 @app.route("/")
 def home():
     if not session.get("email"):
-        #return render_template("home.html", title='Home')
         return redirect('/courses')
     else:
         collection_name = dbconnection.db["admins"]
         user = collection_name.find_one()
         return render_template("admin_home.html", user=user, title='Home')
+
+
+@app.before_request
+def admin():
+    endpoint = str(request.url_rule)
+    if endpoint.startswith('/admin'):
+        if not session.get("email"):
+            return redirect('/login')
 
 @app.route("/add_new_user")
 def add_new_user():
