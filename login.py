@@ -9,7 +9,7 @@ toastr = Toastr()
 def login_page():
     if session.get("email"):
         return redirect('/')
-    return render_template("login.html")
+    return render_template("login.html", title="Crestview - Admin Login")
 
 
 def authenticate_admin():

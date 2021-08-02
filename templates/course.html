@@ -107,7 +107,7 @@ $(document).ready(function() {
             <h2 class="courseh2-heading" id="courseh2">Health Science</h2>
             <ul class="courseul">
                 {% for keys in health_sci_course_list %}
-                    <li class="courseli"><a href="{{ url_for('get_course_application_page', course_id=keys._id) }}">{{keys.course_name}}</a></li>
+                    <li class="courseli"><a href="{{ url_for('get_course_view_page', course_id=keys._id) }}">{{keys.course_name}}</a></li>
                 {% endfor %}
             </ul>
         </div>
@@ -115,7 +115,7 @@ $(document).ready(function() {
             <h2 class="courseh2-heading"  id="courseh3" >Information Technology</h2>
             <ul class="courseul">
                 {% for keys in infor_tech_course_list %}
-                    <li class="courseli"><a href="{{ url_for('get_course_application_page', course_id=keys._id) }}">{{keys.course_name}}</a></li>
+                    <li class="courseli"><a href="{{ url_for('get_course_view_page', course_id=keys._id) }}">{{keys.course_name}}</a></li>
                 {% endfor %}
             </ul>
         </div>
@@ -123,7 +123,7 @@ $(document).ready(function() {
                 <h2 class="courseh2-heading" id="courseh1" style=" color:rgb(15, 33, 68);;">Business</h2>
                 <ul class="courseul">
                     {% for keys in business_course_list %}
-                    <li class="courseli"><a href="{{ url_for('get_course_application_page', course_id=keys._id) }}">{{keys.course_name}}</a></li>
+                    <li class="courseli"><a href="{{ url_for('get_course_view_page', course_id=keys._id) }}">{{keys.course_name}}</a></li>
                 {% endfor %}
                 </ul>
             </div>

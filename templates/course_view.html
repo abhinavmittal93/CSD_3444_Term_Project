@@ -1,0 +1,49 @@
+{% include 'header.html' %}
+<style>
+    body {
+        background-color: #0d242e;
+    }
+    .card-title {
+            font-family: Mija,-apple-system,BlinkMacSystemFont,Roboto,"Roboto Slab","Droid Serif","Segoe UI",system-ui,Arial,sans-serif;
+    }
+    .heading {
+        font-family: Elena,-apple-system,BlinkMacSystemFont,Roboto,"Roboto Slab","Droid Serif","Segoe UI",system-ui,Arial,sans-serif;
+    }
+</style>
+<div class="card" style="margin-top: 5%; background-color: #374b54; color:white;">
+    <div class="card-body">
+        <h2 class="card-title">{{course_details.course_name}} - {{course_details.course_code}}</h2>
+        <div class="row">
+            <span class="col-sm-8">
+                <label><strong>Course Duration:</strong></label>&nbsp;{{course_details.course_duration}} years
+                <br>
+                <label><strong>Co-op Available:</strong></label>&nbsp;
+                {% block content %}
+                    {% if course_details.is_co_op_available %}
+                        Yes
+                    {% else %}
+                        No
+                    {% endif %}
+                {% endblock content %}
+            </span>
+            <span class="col-sm-4 pull-right">
+                <label><strong>Course Fees:</strong></label>&nbsp;${{course_details.course_fees}}
+                <br>
+                <span style="display:flex; align-items: baseline;">
+                    <label><strong>Intakes:</strong></label>&nbsp;
+                    <ul>
+                        {% for my_item in course_details.intakes_available %}
+                            <li>{{ my_item }}</li>
+                        {% endfor %}
+                    </ul>
+                </span>
+            </span>
+        </div>
+        <p class="card-text" style="white-space: pre-wrap;">{{course_details.course_description | safe}}</p>
+        <br>
+        <h2 class="heading">Admission Requirements</h2>
+        <p style="white-space: pre-wrap;">{{course_details.admission_requirements | safe}}</p>
+        <a href="{{ url_for('get_course_application_page', course_id=course_details._id) }}" class="btn btn-primary">Apply</a>
+    </div>
+</div>
+{% include 'footer.html' %}
