@@ -6,14 +6,9 @@ $(document).ready(function() {
 });
 </script>
 
-<style>
-    .card-body-styling {
-
-    }
-</style>
-
-<h1>Application Status for {{email}}</h1>
-<hr>
+<div class="row rowborder">
+    <h1>Application Status for {{email}}</h1>
+</div>
 <div>
     {% for keys in status_records %}
     <br>
@@ -30,57 +25,63 @@ $(document).ready(function() {
             <div class="row col-sm-8 pull-left">
                 <div>
                     <span class="col-sm-2">
-                        <label>Course Duration: </label>
+                        <label><b>Course Duration: </b></label>
                         {{keys.course_details.course_duration}} years
                     </span>
                     <span class="col-sm-10">
-                        <label>Course Fees: </label>
-                        {{keys.course_details.course_fees}} years
+                        <label><b>Course Fees: </b></label>
+                        ${{keys.course_details.course_fees}} (CAD)
                     </span>
                 </div>
                 <div>
                     <span class="col-sm-2">
-                        <label>Co-Op Available: </label>
+                        <label><b>Co-Op Available: </b></label>
                             {% if (keys.course_details.is_co_op_available == True) %}
                                 Yes
                             {% else %}
                                 No
                             {% endif %}
                     </span>
-                    <span class="col-sm-10">
-                        <label>Intakes Available: </label>
+                    <span class="col-sm-10" style="display:flex; align-items: baseline;">
+                        <label><b>Intakes Available: </b></label>
                         {% if (keys.course_details.intakes_available | length > 0) %}
-                            {% for intake in keys.course_details.intakes_available %}
-                                {% if intake == "MAY" %}
-                                  May
-                                {% endif %}
+                            <ul>
+                                {% for intake in keys.course_details.intakes_available %}
+                                    <li>
+                                        {% if intake == "MAY" %}
+                                          May
+                                        {% endif %}
 
-                                {% if intake == "SEPT" %}
-                                  September
-                                {% endif %}
+                                        {% if intake == "SEPT" %}
+                                          September
+                                        {% endif %}
 
-                                {% if intake == "JAN" %}
-                                  January
-                                {% endif %}
-                            {% endfor %}
+                                        {% if intake == "JAN" %}
+                                          January
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
                         {% else %}
                             None
                         {% endif %}
                     </span>
                 </div>
                 <div class="clearfix"></div>
-                <div class="col-sm-12">
-                    <label>Status Updated On: </label>
-                    {{keys.date.strftime('%Y-%m-%d')}}
-                </div>
+                {% if (keys.status != 'PEND') %}
+                     <div class="col-sm-12">
+                        <label><b>Status Updated On: </b></label>
+                        {{keys.date.strftime('%Y-%m-%d')}}
+                    </div>
+                {% endif %}
             </div>
             <div class="col-sm-3 pull-right">
                 {% if (keys.status == 'ACCPT') %}
-                    <span style="color:green;"><i class="fa fa-check-circle fa-2" aria-hidden="true"></i>Accepted</span>
+                    <span style="color:green;"><i class="fa fa-check-circle fa-2" aria-hidden="true"></i>&nbsp;Accepted</span>
                 {% elif (keys.status == 'RJCT') %}
-                    <span style="color:red;"><i class="fa fa-times-circle fa-2" aria-hidden="true"></i>Rejected</span>
+                    <span style="color:red;"><i class="fa fa-times-circle fa-2" aria-hidden="true"></i>&nbsp;Rejected</span>
                 {% else %}
-                    <span style="color:yellow;"><i class="fa fa-exclamation-triangle fa-2" aria-hidden="true"></i>Pending</span>
+                    <span style="color:#ff4500bf;"><i class="fa fa-exclamation-triangle fa-2" aria-hidden="true"></i>&nbsp;Pending</span>
                 {% endif %}
             </div>
         </div>
