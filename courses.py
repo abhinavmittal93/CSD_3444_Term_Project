@@ -64,7 +64,7 @@ def apply_course():
         phno = request.form.get("phone")
         gender = request.form.get("gender")
         higdgr = request.form.get("hdegree")
-        dict = {"student_name": stname, " father_name": fname, "mother_name": mname, "email": email,
+        dict = {"student_name": stname, "father_name": fname, "mother_name": mname, "email": email,
                 "phone_number": phno, "gender": gender, "highest_degree": higdgr, "course_id": ObjectId(str(course_id))}
         conn_contact = dbconnection.db["admission_applications"]
         conn_contact.insert_one(dict)
