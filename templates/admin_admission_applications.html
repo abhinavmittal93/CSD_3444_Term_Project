@@ -1,0 +1,42 @@
+{% include 'header.html' %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#admission_applications_menu_item').addClass('active');
+    $('.table').DataTable();
+});
+
+
+</script>
+
+<div class="row rowborder">
+    <h1>{{title}}</h1>
+</div>
+<br>
+<div>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Student Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Course</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for keys in pending_applications_list %}
+        <tr>
+            <td>{{keys.student_name}}</td>
+            <td>{{keys.email}}</td>
+            <td>{{keys.course_details.course_name}}</td>
+            <td>
+                <a href="{{ url_for('get_application_by_id', application_id=keys._id) }}" class="btn btn-primary">View</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% include 'footer.html' %}
