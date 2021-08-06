@@ -3,7 +3,7 @@ from flask import request, render_template, flash, redirect
 import dbconnection
 import course_category
 import admin_courses
-
+import admission_applications
 
 def get_courses_page():
     course_category_list = course_category.get_course_categories()
@@ -51,15 +51,20 @@ def get_course_view_page(course_id):
 
 def apply_course():
     try:
+        email = request.form.get("email")
+        course_id = request.form.get("course_id")
+        if admission_applications.get_admission_application_by_course_and_email(ObjectId(str(course_id)), email.lower()) is not None:
+            flash("You have already applied to this course. Please check the status in \"Check Application Status\" menu.", 'warning')
+            return redirect('/courses')
+
+
         stname = request.form.get("stname")
         fname = request.form.get("fname")
         mname = request.form.get("mname")
-        email = request.form.get("email")
         phno = request.form.get("phone")
         gender = request.form.get("gender")
         higdgr = request.form.get("hdegree")
-        course_id = request.form.get("course_id")
-        dict = {"student_name": stname, " father_name": fname, "mother_name": mname, "email": email,
+        dict = {"student_name": stname, "father_name": fname, "mother_name": mname, "email": email,
                 "phone_number": phno, "gender": gender, "highest_degree": higdgr, "course_id": ObjectId(str(course_id))}
         conn_contact = dbconnection.db["admission_applications"]
         conn_contact.insert_one(dict)

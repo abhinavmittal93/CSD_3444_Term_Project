@@ -1,0 +1,55 @@
+{% include 'header.html' %}
+<div class="card" style="margin-top: 5%;">
+    <div class="card-body">
+        <h2 class="card-title">{{application_details.student_name}}</h2>
+        <div class="row">
+            <div class="col-sm-8">
+                <label><strong>Father's Name:</strong></label>&nbsp;{{application_details.father_name}}
+            </div>
+            <div class="col-sm-8">
+                <label><strong>Mother's Name:</strong></label>&nbsp;{{application_details.mother_name}}
+            </div>
+            <div class="col-sm-8">
+                <label><strong>Email:</strong></label>&nbsp;{{application_details.email}}
+            </div>
+            <div class="col-sm-8">
+                <label><strong>Phone Number:</strong></label>&nbsp;{{application_details.phone_number}}
+            </div>
+            <div class="col-sm-8">
+                <label><strong>Gender:</strong></label>&nbsp;{{application_details.gender}}
+            </div>
+            <div class="col-sm-8">
+                <label><strong>Highest Degree:</strong></label>&nbsp;
+                {% block content %}
+                    {% if application_details.highest_degree == 'matric' %}
+                        Sen. Sec.
+                    {% elif application_details.highest_degree == 'graduation' %}
+                        Bachelor Degree
+                    {% else %}
+                        Diploma
+                    {% endif %}
+                {% endblock content %}
+            </div>
+        </div>
+        <a href="{{ url_for('get_course_view_page', course_id=application_details.course_id) }}" target="_blank" class="btn btn-primary">Check Course Details</a>
+        <br>
+        <br>
+        <br>
+        <div class="row col-sm-12">
+            <form action="{{ url_for('update_application_status')}}" method="post">
+                <input type="hidden" name="email" value="{{application_details.email}}">
+                <input type="hidden" name="status" value="ACCPT">
+                <input type="hidden" name="application_id" value="{{application_details._id}}">
+                <button type="submit" class="btn btn-success">Accept</button>
+            </form>
+            &nbsp;
+            <form action="{{ url_for('update_application_status')}}" method="post">
+                <input type="hidden" name="email" value="{{application_details.email}}">
+                <input type="hidden" name="status" value="RJCT">
+                <input type="hidden" name="application_id" value="{{application_details._id}}">
+                <button type="submit" class="btn btn-danger">Reject</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
