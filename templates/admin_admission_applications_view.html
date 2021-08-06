@@ -35,8 +35,21 @@
         <br>
         <br>
         <br>
-        <a href="" class="btn btn-success">Accept</a>
-        <a href="" class="btn btn-danger">Reject</a>
+        <div class="row col-sm-12">
+            <form action="{{ url_for('update_application_status')}}" method="post">
+                <input type="hidden" name="email" value="{{application_details.email}}">
+                <input type="hidden" name="status" value="ACCPT">
+                <input type="hidden" name="application_id" value="{{application_details._id}}">
+                <button type="submit" class="btn btn-success">Accept</button>
+            </form>
+            &nbsp;
+            <form action="{{ url_for('update_application_status')}}" method="post">
+                <input type="hidden" name="email" value="{{application_details.email}}">
+                <input type="hidden" name="status" value="RJCT">
+                <input type="hidden" name="application_id" value="{{application_details._id}}">
+                <button type="submit" class="btn btn-danger">Reject</button>
+            </form>
+        </div>
     </div>
 </div>
 {% include 'footer.html' %}
