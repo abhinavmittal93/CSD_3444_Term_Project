@@ -31,6 +31,7 @@ app.add_url_rule('/admin/course/edit/<string:course_id>', endpoint='get_edit_cou
 app.add_url_rule('/admin/course/save', view_func=admin_courses.save_course, methods=['POST'])
 app.add_url_rule('/admin/admission/applications', view_func=admission_applications.get_pending_admission_applications_page)
 app.add_url_rule('/admin/admission/applications/<string:application_id>', endpoint='get_application_by_id', view_func=admission_applications.get_application_by_id)
+app.add_url_rule('/admin/admission/application/updatestatus', view_func=admission_applications.update_application_status, methods=['POST'])
 
 app.add_url_rule('/contactus', view_func=Contact_Us.get_contact_us_page)
 app.add_url_rule('/contactus/save', view_func=Contact_Us.save_contact_us_details, methods=['POST'])

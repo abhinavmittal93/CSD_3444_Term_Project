@@ -1,7 +1,8 @@
 from bson import ObjectId
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, request
 import dbconnection
 import admin_courses
+import application_status
 
 
 def get_admission_application_by_course_and_email(course_id, email):
@@ -54,3 +55,24 @@ def get_application_by_id(application_id):
         print(e)
         flash("Error occurred. Please try again!", 'error')
         return redirect('/admin/admission/applications')
+
+
+def update_application_status():
+    email = request.form["email"]
+    status = request.form["status"]
+    application_id = request.form["application_id"]
+    try:
+        application_status.accept_reject_application(email.lower(), status, application_id)
+        if status == 'ACCPT':
+            flash("Application has been approved successfully.", 'success')
+        else:
+            flash("Application has been rejected successfully.", 'success')
+        return redirect('/admin/admission/applications')
+    except Exception as e:
+        print(f'An exception occurred while updating the status of an application {e}')
+        flash("An error occurred. Please try again.", 'error')
+        return redirect('/admin/admission/applications/' + application_id)
+
+
+
+

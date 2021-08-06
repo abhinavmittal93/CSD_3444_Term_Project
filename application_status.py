@@ -1,3 +1,5 @@
+import datetime
+
 from bson import ObjectId
 from flask import request, render_template, redirect, flash
 import dbconnection
@@ -56,3 +58,10 @@ def get_course_details(course_id):
     query = {'_id': course_id}
     collection_name = dbconnection.db["courses"]
     return collection_name.find_one(query)
+
+
+def accept_reject_application(email, status, application_id):
+    collection_name = dbconnection.db["application_status"]
+    record = {"email": email, "status": status, "date": datetime.datetime.utcnow(),
+              "application_id": ObjectId(str(application_id))}
+    collection_name.insert_one(record)
