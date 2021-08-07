@@ -3,15 +3,21 @@ import datetime
 from bson import ObjectId
 from flask import request, render_template, redirect, flash
 import dbconnection
+from logconfig import LogConfig
+
+log_config = LogConfig()
+logger = log_config.logger_config()
 
 
 # Gets the Application Status page to check the status of application by email id
 def get_check_application_status_page():
+    logger.info('get_check_application_status_page() begins')
     return render_template("application_status_check.html", title="Check Application Status")
 
 
 # It checks the application status and details by email id
 def check_application_status():
+    logger.info('check_application_status() begins')
     email = request.form["email"]
     query = {'email': email.lower()}
     collection_name = dbconnection.db["application_status"]
@@ -51,6 +57,7 @@ def check_application_status():
 
 # It gets the application details from DB by _id from "admission_applications"
 def get_application_details(application_id):
+    logger.info(f'get_application_details({application_id}) begins')
     query = {'_id': application_id}
     collection_name = dbconnection.db["admission_applications"]
     return collection_name.find_one(query)
@@ -58,6 +65,7 @@ def get_application_details(application_id):
 
 # It gets the course details by _id from "courses" collection
 def get_course_details(course_id):
+    logger.info(f'get_course_details({course_id}) begins')
     query = {'_id': course_id}
     collection_name = dbconnection.db["courses"]
     return collection_name.find_one(query)
@@ -66,6 +74,7 @@ def get_course_details(course_id):
 # It updates the application status and creates a record in "application_status"
 # based on the status value which could be "ACCPT" or "RJCT"
 def accept_reject_application(email, status, application_id):
+    logger.info(f'accept_reject_application({email}, {status}, {application_id}) begins')
     collection_name = dbconnection.db["application_status"]
     record = {"email": email, "status": status, "date": datetime.datetime.utcnow(),
               "application_id": ObjectId(str(application_id))}
