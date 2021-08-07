@@ -15,11 +15,15 @@ import admission_applications
 app = Flask(__name__)
 toastr = Toastr(app)
 
+# Configuring the app
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-app.config["TEMPLATES_AUTO_RELOAD"] = True
+# Uncomment the below line in development mode to check the HTML changes live.
+# app.config["TEMPLATES_AUTO_RELOAD"] = True
 Session(app)
 
+
+# Defining all the endpoints
 app.add_url_rule('/login', view_func=login.login_page)
 app.add_url_rule('/authenticate', view_func=login.authenticate_admin, methods=['POST'])
 app.add_url_rule('/logout', view_func=login.logout)
@@ -45,6 +49,8 @@ app.add_url_rule('/application/status', view_func=application_status.get_check_a
 app.add_url_rule('/application/status/check', view_func=application_status.check_application_status, methods=['POST'])
 
 
+# Home Page endpoint
+# It will redirect the user on the basis of its role by checking the session.
 @app.route("/")
 def home():
     if not session.get("email"):
@@ -55,6 +61,7 @@ def home():
         return render_template("admin_home.html", user=user, title='Home')
 
 
+# It will check if the user is logged in before every request which contains "/admin" in it.
 @app.before_request
 def admin():
     endpoint = str(request.url_rule)
@@ -63,6 +70,7 @@ def admin():
             return redirect('/login')
 
 
+# Method to create a new user with static info
 @app.route("/add_new_user")
 def add_new_user():
     user = User("Abhinav Mittal", "abhinavmittal93@gmail.com", "@Bhinav123")
@@ -73,16 +81,19 @@ def add_new_user():
         return response
 
 
+# It handles the error 404, in case user tries to open a URL which does not exist.
 @app.errorhandler(404)
 def handle_page_not_found_error(e):
     return render_template('404.html', title="Page Not Found"), 404
 
 
+# It handles the error 500, in case there's an unhandled exception occurs.
 @app.errorhandler(500)
 def handle_internal_server_error(e):
     return render_template('500.html', title="Internal Server Error"), 500
 
 
+# main method to run the app
 if __name__ == '__main__':
     toastr.init_app(app)
     app.run()

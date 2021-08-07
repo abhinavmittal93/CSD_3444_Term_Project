@@ -5,12 +5,14 @@ import admin_courses
 import application_status
 
 
+# Get the application details by email_id and course_id from DB
 def get_admission_application_by_course_and_email(course_id, email):
     query = {'course_id': course_id, 'email': email}
     collection_name = dbconnection.db["admission_applications"]
     return collection_name.find_one(query)
 
 
+# Get the pending applications page
 def get_pending_admission_applications_page():
     try:
         pending_applications_list = get_pending_admission_applications()
@@ -22,6 +24,7 @@ def get_pending_admission_applications_page():
         return redirect('/admin/courses')
 
 
+# Get the application which is neither accepted or rejected, by email id
 def get_pending_admission_applications():
     application_status_coll = dbconnection.db["application_status"]
     decided_applications_id = application_status_coll.find()
@@ -44,6 +47,7 @@ def get_pending_admission_applications():
     return pending_applications_list
 
 
+# Get the application details by _id from "admission_applications"
 def get_application_by_id(application_id):
     try:
         query = {'_id': ObjectId(str(application_id))}
@@ -57,6 +61,7 @@ def get_application_by_id(application_id):
         return redirect('/admin/admission/applications')
 
 
+# It updates the application status on the basis of admin's decision ('ACCPT' or 'RJCT')
 def update_application_status():
     email = request.form["email"]
     status = request.form["status"]
