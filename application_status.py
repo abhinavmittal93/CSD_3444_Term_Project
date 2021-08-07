@@ -5,11 +5,12 @@ from flask import request, render_template, redirect, flash
 import dbconnection
 
 
-
+# Gets the Application Status page to check the status of application by email id
 def get_check_application_status_page():
     return render_template("application_status_check.html", title="Check Application Status")
 
 
+# It checks the application status and details by email id
 def check_application_status():
     email = request.form["email"]
     query = {'email': email.lower()}
@@ -48,18 +49,22 @@ def check_application_status():
                                email=email.lower(), title="Application Status")
 
 
+# It gets the application details from DB by _id from "admission_applications"
 def get_application_details(application_id):
     query = {'_id': application_id}
     collection_name = dbconnection.db["admission_applications"]
     return collection_name.find_one(query)
 
 
+# It gets the course details by _id from "courses" collection
 def get_course_details(course_id):
     query = {'_id': course_id}
     collection_name = dbconnection.db["courses"]
     return collection_name.find_one(query)
 
 
+# It updates the application status and creates a record in "application_status"
+# based on the status value which could be "ACCPT" or "RJCT"
 def accept_reject_application(email, status, application_id):
     collection_name = dbconnection.db["application_status"]
     record = {"email": email, "status": status, "date": datetime.datetime.utcnow(),

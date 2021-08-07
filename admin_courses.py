@@ -3,6 +3,8 @@ from flask import render_template, request, redirect, flash, session
 import dbconnection
 import course_category
 
+
+# Get Course List page for Admin
 def get_admin_course_list_page():
     try:
         courses_list = get_all_courses()
@@ -13,26 +15,28 @@ def get_admin_course_list_page():
         return render_template("admin_courses.html", courses_list=None)
 
 
+# Get all the courses list
 def get_all_courses():
     collection_name = dbconnection.db["courses"]
     courses_list = collection_name.find()
 
     result_list = []
     for record in courses_list:
-        course_category_details = get_coures_category_details(record['course_category_id'])
+        course_category_details = get_course_category_details(record['course_category_id'])
         record['course_category_details'] = course_category_details
         result_list.append(record)
 
     return result_list
 
 
-def get_coures_category_details(course_category_id):
+# Get course category details by _id for the related course
+def get_course_category_details(course_category_id):
     query = {'_id': course_category_id}
     collection_name = dbconnection.db["course_category"]
     return collection_name.find_one(query)
 
 
-
+# Deletes the course from DB by _id
 def delete_course(object_id):
     try:
         collection_name = dbconnection.db["courses"]
@@ -45,6 +49,7 @@ def delete_course(object_id):
     return redirect('/admin/courses')
 
 
+# Gets the add new course page for the admin
 def get_add_new_course_page(course_details={}):
     try:
         course_category_list = course_category.get_course_categories()
@@ -59,6 +64,7 @@ def get_add_new_course_page(course_details={}):
         return redirect('/admin/courses')
 
 
+# Gets the add edit course page for the admin
 def get_edit_course_page(course_id):
     try:
         course_category_list = course_category.get_course_categories()
@@ -71,12 +77,14 @@ def get_edit_course_page(course_id):
         return redirect('/admin/courses')
 
 
+# Gets the course details by _id from "courses" collection
 def get_course_details_by_id(course_id):
     query = {'_id': ObjectId(course_id)}
     collection_name = dbconnection.db["courses"]
     return collection_name.find_one(query)
 
 
+# Gets the course details submitted by the admin and saves it
 def save_course():
     req = request.form
 
@@ -137,6 +145,7 @@ def save_course():
             return get_add_new_course_page(course)
 
 
+# Saves the course details in the DB
 def save_course_details(AdminCourses):
     collection_name = dbconnection.db["courses"]
     record = {"course_code": AdminCourses.course_code,
@@ -153,6 +162,7 @@ def save_course_details(AdminCourses):
     return response.acknowledged
 
 
+# It updates the course details by _id
 def update_course_details_by_id(AdminCourses, course_id):
     collection_name = dbconnection.db["courses"]
     record = {"course_code": AdminCourses.course_code,

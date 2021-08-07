@@ -5,6 +5,7 @@ import course_category
 import admin_courses
 import admission_applications
 
+# It gets the courses list on the home page for the user.
 def get_courses_page():
     course_category_list = course_category.get_course_categories()
     collection_name = dbconnection.db["courses"]
@@ -27,6 +28,7 @@ def get_courses_page():
                            title="Courses")
 
 
+# It gets the application page with the selected the course by the user
 def get_course_application_page(course_id):
     try:
         course_list = admin_courses.get_all_courses()
@@ -39,6 +41,7 @@ def get_course_application_page(course_id):
         return redirect('/courses')
 
 
+# It gets the course details page for the selected course from the home page
 def get_course_view_page(course_id):
     try:
         course_details = admin_courses.get_course_details_by_id(course_id)
@@ -49,6 +52,8 @@ def get_course_view_page(course_id):
         return redirect('/courses')
 
 
+# It saves the user details in database for a particular course.
+# And it validates if the user has already applied for the course or not.
 def apply_course():
     try:
         email = request.form.get("email")

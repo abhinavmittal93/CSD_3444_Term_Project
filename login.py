@@ -5,13 +5,13 @@ from flask_toastr import Toastr
 
 toastr = Toastr()
 
-
+# Gets the Admin Login page
 def login_page():
     if session.get("email"):
         return redirect('/')
     return render_template("login.html", title="Crestview - Admin Login")
 
-
+# It validates the username and password entered by the user
 def authenticate_admin():
     if session.get("email"):
         return redirect('/')
@@ -50,6 +50,7 @@ def authenticate_admin():
     return redirect('/login')
 
 
+# It empties the session and logout the user.
 def logout():
     session.pop('email',None)
     flash("Logged out successfully.", 'success')
