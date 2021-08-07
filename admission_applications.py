@@ -3,10 +3,15 @@ from flask import render_template, flash, redirect, request
 import dbconnection
 import admin_courses
 import application_status
+from logconfig import LogConfig
+
+log_config = LogConfig()
+logger = log_config.logger_config()
 
 
 # Get the application details by email_id and course_id from DB
 def get_admission_application_by_course_and_email(course_id, email):
+    logger.info(f'get_admission_application_by_course_and_email({course_id}, {email}) begins')
     query = {'course_id': course_id, 'email': email}
     collection_name = dbconnection.db["admission_applications"]
     return collection_name.find_one(query)
@@ -14,18 +19,21 @@ def get_admission_application_by_course_and_email(course_id, email):
 
 # Get the pending applications page
 def get_pending_admission_applications_page():
+    logger.info('get_pending_admission_applications_page begins')
     try:
         pending_applications_list = get_pending_admission_applications()
         return render_template("admin_admission_applications.html", pending_applications_list=pending_applications_list,
                                title='Admission Applications')
     except Exception as e:
         print(e)
+        logger.error(f'Exception occurred in get_pending_admission_applications_page: {e}')
         flash("Error occurred. Please try again!", 'error')
         return redirect('/admin/courses')
 
 
 # Get the application which is neither accepted or rejected, by email id
 def get_pending_admission_applications():
+    logger.info('get_pending_admission_applications begins')
     application_status_coll = dbconnection.db["application_status"]
     decided_applications_id = application_status_coll.find()
     decided_applications_id_list = []
@@ -49,6 +57,7 @@ def get_pending_admission_applications():
 
 # Get the application details by _id from "admission_applications"
 def get_application_by_id(application_id):
+    logger.info(f'get_application_by_id({application_id}) begins')
     try:
         query = {'_id': ObjectId(str(application_id))}
         collection_name = dbconnection.db["admission_applications"]
@@ -57,12 +66,14 @@ def get_application_by_id(application_id):
                                title='Admission Application')
     except Exception as e:
         print(e)
+        logger.error(f'Exception occurred in get_application_by_id({application_id}): {e}')
         flash("Error occurred. Please try again!", 'error')
         return redirect('/admin/admission/applications')
 
 
 # It updates the application status on the basis of admin's decision ('ACCPT' or 'RJCT')
 def update_application_status():
+    logger.info('update_application_status() begins')
     email = request.form["email"]
     status = request.form["status"]
     application_id = request.form["application_id"]
@@ -75,6 +86,7 @@ def update_application_status():
         return redirect('/admin/admission/applications')
     except Exception as e:
         print(f'An exception occurred while updating the status of an application {e}')
+        logger.error(f'Exception occurred in update_application_status: {e}')
         flash("An error occurred. Please try again.", 'error')
         return redirect('/admin/admission/applications/' + application_id)
 

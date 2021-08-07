@@ -12,6 +12,8 @@ from user import User
 import Contact_Us
 import admission_applications
 
+from logconfig import LogConfig
+
 app = Flask(__name__)
 toastr = Toastr(app)
 
@@ -22,6 +24,8 @@ app.config["SESSION_TYPE"] = "filesystem"
 # app.config["TEMPLATES_AUTO_RELOAD"] = True
 Session(app)
 
+log_config = LogConfig()
+logger = log_config.logger_config()
 
 # Defining all the endpoints
 app.add_url_rule('/login', view_func=login.login_page)
@@ -53,9 +57,12 @@ app.add_url_rule('/application/status/check', view_func=application_status.check
 # It will redirect the user on the basis of its role by checking the session.
 @app.route("/")
 def home():
+    logger.info("home page called")
     if not session.get("email"):
+        logger.info("User is not logged in, redirecting to User's Courses Page")
         return redirect('/courses')
     else:
+        logger.info("User is logged in, redirecting to Admin's Home Page")
         collection_name = dbconnection.db["admins"]
         user = collection_name.find_one()
         return render_template("admin_home.html", user=user, title='Home')
@@ -63,11 +70,14 @@ def home():
 
 # It will check if the user is logged in before every request which contains "/admin" in it.
 @app.before_request
-def admin():
+def secure_admin_route():
+    logger.info("secure_admin_route() begins:")
     endpoint = str(request.url_rule)
     if endpoint.startswith('/admin'):
         if not session.get("email"):
             return redirect('/login')
+        else:
+            logger.info(f"---------Logged In User: {session.get('email')}---------")
 
 
 # Method to create a new user with static info
@@ -84,16 +94,19 @@ def add_new_user():
 # It handles the error 404, in case user tries to open a URL which does not exist.
 @app.errorhandler(404)
 def handle_page_not_found_error(e):
+    logger.warning(f"handle_page_not_found_error() begins: {e} ")
     return render_template('404.html', title="Page Not Found"), 404
 
 
 # It handles the error 500, in case there's an unhandled exception occurs.
 @app.errorhandler(500)
 def handle_internal_server_error(e):
+    logger.warning(f"handle_internal_server_error() begins: {e} ")
     return render_template('500.html', title="Internal Server Error"), 500
 
 
 # main method to run the app
 if __name__ == '__main__':
+    logger.info("Starting the application")
     toastr.init_app(app)
     app.run()

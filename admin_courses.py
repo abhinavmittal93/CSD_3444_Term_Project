@@ -2,21 +2,28 @@ from bson import ObjectId
 from flask import render_template, request, redirect, flash, session
 import dbconnection
 import course_category
+from logconfig import LogConfig
+
+log_config = LogConfig()
+logger = log_config.logger_config()
 
 
 # Get Course List page for Admin
 def get_admin_course_list_page():
+    logger.info("get_admin_course_list_page() begins")
     try:
         courses_list = get_all_courses()
         return render_template("admin_courses.html", courses_list=courses_list, title='Courses')
     except Exception as e:
         print(e)
+        logger.error(f"Exception occurred in get_admin_course_list_page(): {e}")
         flash("Error occurred. Please try again!", 'error')
         return render_template("admin_courses.html", courses_list=None)
 
 
 # Get all the courses list
 def get_all_courses():
+    logger.info("get_all_courses() begins")
     collection_name = dbconnection.db["courses"]
     courses_list = collection_name.find()
 
@@ -31,6 +38,7 @@ def get_all_courses():
 
 # Get course category details by _id for the related course
 def get_course_category_details(course_category_id):
+    logger.info(f"get_course_category_details({course_category_id}) begins")
     query = {'_id': course_category_id}
     collection_name = dbconnection.db["course_category"]
     return collection_name.find_one(query)
@@ -38,12 +46,14 @@ def get_course_category_details(course_category_id):
 
 # Deletes the course from DB by _id
 def delete_course(object_id):
+    logger.info(f"delete_course({object_id}) begins")
     try:
         collection_name = dbconnection.db["courses"]
         collection_name.delete_one({'_id': ObjectId(object_id)})
         flash("Course Deleted Successfully.", 'success')
     except Exception as e:
         print(e)
+        logger.error(f"Exception occurred in delete_course({object_id}): {e}")
         flash("Error occurred. Please try again!", 'error')
 
     return redirect('/admin/courses')
@@ -51,6 +61,7 @@ def delete_course(object_id):
 
 # Gets the add new course page for the admin
 def get_add_new_course_page(course_details={}):
+    logger.info("get_add_new_course_page() begins")
     try:
         course_category_list = course_category.get_course_categories()
         if course_details == {}:
@@ -60,12 +71,14 @@ def get_add_new_course_page(course_details={}):
                                title="New Course")
     except Exception as e:
         print(e)
+        logger.error(f"Exception occurred in get_add_new_course_page(): {e}")
         flash("Error occurred. Please try again!", 'error')
         return redirect('/admin/courses')
 
 
 # Gets the add edit course page for the admin
 def get_edit_course_page(course_id):
+    logger.info(f"get_edit_course_page({course_id}) begins")
     try:
         course_category_list = course_category.get_course_categories()
         course_details = get_course_details_by_id(course_id)
@@ -73,12 +86,14 @@ def get_edit_course_page(course_id):
                                course_details=course_details, title="Edit Course")
     except Exception as e:
         print(e)
+        logger.error(f"Exception occurred in get_edit_course_page({course_id}): {e}")
         flash("Error occurred. Please try again!", 'error')
         return redirect('/admin/courses')
 
 
 # Gets the course details by _id from "courses" collection
 def get_course_details_by_id(course_id):
+    logger.info(f"get_course_details_by_id({course_id}) begins")
     query = {'_id': ObjectId(course_id)}
     collection_name = dbconnection.db["courses"]
     return collection_name.find_one(query)
@@ -86,6 +101,7 @@ def get_course_details_by_id(course_id):
 
 # Gets the course details submitted by the admin and saves it
 def save_course():
+    logger.info("save_course() begins")
     req = request.form
 
     course_id = request.form["course_id"]
@@ -138,6 +154,7 @@ def save_course():
         return redirect('/admin/courses')
     except Exception as e:
         print(e)
+        logger.error(f"Exception occurred in save_course(): {e}")
         flash('An error occurred. Please try again!', 'error')
         if course_id:
             return get_edit_course_page(course_id)
@@ -147,6 +164,7 @@ def save_course():
 
 # Saves the course details in the DB
 def save_course_details(AdminCourses):
+    logger.info("save_course_details() begins")
     collection_name = dbconnection.db["courses"]
     record = {"course_code": AdminCourses.course_code,
               "course_name": AdminCourses.course_name,
@@ -164,6 +182,7 @@ def save_course_details(AdminCourses):
 
 # It updates the course details by _id
 def update_course_details_by_id(AdminCourses, course_id):
+    logger.info("update_course_details_by_id() begins")
     collection_name = dbconnection.db["courses"]
     record = {"course_code": AdminCourses.course_code,
               "course_name": AdminCourses.course_name,

@@ -4,9 +4,15 @@ import dbconnection
 import course_category
 import admin_courses
 import admission_applications
+from logconfig import LogConfig
+
+log_config = LogConfig()
+logger = log_config.logger_config()
+
 
 # It gets the courses list on the home page for the user.
 def get_courses_page():
+    logger.info('get_courses_page() begins')
     course_category_list = course_category.get_course_categories()
     collection_name = dbconnection.db["courses"]
     for course_category_item in course_category_list:
@@ -30,6 +36,7 @@ def get_courses_page():
 
 # It gets the application page with the selected the course by the user
 def get_course_application_page(course_id):
+    logger.info(f'get_course_application_page({course_id}) begins')
     try:
         course_list = admin_courses.get_all_courses()
         course_details = admin_courses.get_course_details_by_id(course_id)
@@ -37,17 +44,20 @@ def get_course_application_page(course_id):
                                selected_course_id=course_id, title="Course Application")
     except Exception as e:
         print(e)
+        logger.error(f'Exception occurred in get_course_application_page({course_id}): {e}')
         flash("Error occurred. Please try again!", 'error')
         return redirect('/courses')
 
 
 # It gets the course details page for the selected course from the home page
 def get_course_view_page(course_id):
+    logger.info(f'get_course_view_page({course_id}) begins')
     try:
         course_details = admin_courses.get_course_details_by_id(course_id)
         return render_template("course_view.html", course_details=course_details, title='Course - ' + course_details['course_name'])
     except Exception as e:
         print(e)
+        logger.error(f'Exception occurred in get_course_view_page({course_id}): {e}')
         flash("Error occurred. Please try again!", 'error')
         return redirect('/courses')
 
@@ -55,6 +65,7 @@ def get_course_view_page(course_id):
 # It saves the user details in database for a particular course.
 # And it validates if the user has already applied for the course or not.
 def apply_course():
+    logger.info('apply_course() begins')
     try:
         email = request.form.get("email")
         course_id = request.form.get("course_id")
@@ -76,6 +87,7 @@ def apply_course():
         flash("You have applied successfully.", 'success')
     except Exception as e:
         print(e)
+        logger.error(f'Exception occurred in apply_course(): {e}')
         flash("Error occurred. Please try again!", 'error')
 
     return redirect('/courses')
